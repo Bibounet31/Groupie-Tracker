@@ -25,6 +25,10 @@ func indexHandler(w http.ResponseWriter, r *http.Request) { //load index.html
 	render(w, "index.html", nil)
 }
 
+func artistesHandler(w http.ResponseWriter, r *http.Request) {
+	render(w, "artistes.html", nil)
+}
+
 func submitHandler(w http.ResponseWriter, r *http.Request) { //executed when a submit request is posted
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/", 303)
@@ -38,6 +42,7 @@ func Start() {
 	// Routes
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/submit", submitHandler)
+	http.HandleFunc("/artistes", artistesHandler)
 
 	// Static files
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("web/css"))))

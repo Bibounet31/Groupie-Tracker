@@ -45,8 +45,6 @@ func submitHandler(w http.ResponseWriter, r *http.Request) { //executed when a s
 	http.Redirect(w, r, "/", 303)
 }
 
-// -------------------- PUBLIC FUNCTION --------------------
-
 func Start() {
 	// Routes
 	http.HandleFunc("/", indexHandler)

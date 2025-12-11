@@ -30,7 +30,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	render(w, "index.html", data)
 }
 
-func submitHandler(w http.ResponseWriter, r *http.Request) {
+func artistesHandler(w http.ResponseWriter, r *http.Request) {
+	render(w, "artistes.html", nil)
+}
+
+func submitHandler(w http.ResponseWriter, r *http.Request) { //executed when a submit request is posted
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/", 303)
 		return
@@ -41,10 +45,15 @@ func submitHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 303)
 }
 
+// -------------------- PUBLIC FUNCTION --------------------
+
 func Start() {
+	// Routes
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/submit", submitHandler)
+	http.HandleFunc("/artistes", artistesHandler)
 
+	// Static files
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("web/css"))))
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("web/img"))))
 

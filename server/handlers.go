@@ -11,6 +11,7 @@ type PageData struct {
 
 var counter int // global variable
 
+// send data to page
 func render(w http.ResponseWriter, file string, data any) {
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
@@ -24,15 +25,18 @@ func render(w http.ResponseWriter, file string, data any) {
 	t.Execute(w, data)
 }
 
+// load index page
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	data := PageData{A: counter}
 	render(w, "index.html", data)
 }
 
+// load artist page
 func ArtistesHandler(w http.ResponseWriter, r *http.Request) {
 	render(w, "artistes.html", nil)
 }
 
+// when submit is sent
 func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/", 303)

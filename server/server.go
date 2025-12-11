@@ -6,7 +6,13 @@ import (
 	"net/http"
 )
 
-func render(w http.ResponseWriter, file string, data any) { //render template
+type PageData struct {
+	A int
+}
+
+var counter int // global variable
+
+func render(w http.ResponseWriter, file string, data any) {
 	funcMap := template.FuncMap{
 		"add": func(a, b int) int { return a + b },
 	}
@@ -19,27 +25,26 @@ func render(w http.ResponseWriter, file string, data any) { //render template
 	t.Execute(w, data)
 }
 
-// -------------------- HANDLERS --------------------
-
-func indexHandler(w http.ResponseWriter, r *http.Request) { //load index.html
-	render(w, "index.html", nil)
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	data := PageData{A: counter}
+	render(w, "index.html", data)
 }
 
-func submitHandler(w http.ResponseWriter, r *http.Request) { //executed when a submit request is posted
+func submitHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/", 303)
 		return
 	}
+
+	counter++ // increase the value
+
+	http.Redirect(w, r, "/", 303)
 }
 
-// -------------------- PUBLIC FUNCTION --------------------
-
 func Start() {
-	// Routes
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/submit", submitHandler)
 
-	// Static files
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("web/css"))))
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("web/img"))))
 

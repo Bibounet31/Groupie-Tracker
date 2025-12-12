@@ -7,18 +7,23 @@
     <link rel="stylesheet" href="../css/artistes.css">
 </head>
 
-<body>
-<h1>Liste des artistes</h1>
-<a href="/">Retour à l'accueil</a>
+    <body>
 
-<ul>
-    {{ range . }}
-    <li>
-        <img src="{{ .Image }}" alt="" class="artist-img">
-        <a href="details.hmtl">{{ .Name }}</a>
-    </li>
-    {{ end }}
-</ul>
+        <a href="/">Retour à l'accueil</a>
+        <h1>Liste des artistes</h1>
 
-</body>
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+
+        <ul id="myUL">
+            {{ range . }}
+            <li>
+                <img src="{{ .Image }}" alt="" class="artist-img">
+                <a href="details.html">{{ .Name }}</a>
+            </li>
+            {{ end }}
+        </ul>
+
+        <script src="../js/script.js"></script>
+
+    </body>
 </html>

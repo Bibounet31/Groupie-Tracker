@@ -13,7 +13,10 @@
 
 <ul>
     {{ range . }}
-    <li>{{ .Name }}</li>
+    <li>
+        <img src="{{ .Image }}" alt="" class="artist-img">
+        <span>{{ .Name }}</span>
+    </li>
     {{ end }}
 </ul>
 

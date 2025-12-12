@@ -35,6 +35,13 @@ a {
     box-shadow: 0 6px 12px;
 }
 
+/* Effet au survol */
+a:hover {
+    transform: scale(1.1); /* grossit légèrement */
+    background-color: rgba(0, 5, 7, 0.53); /* fond un peu plus visible au survol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
+}
+
 p {
     box-shadow: 0 6px 12px;
     text-align: center;

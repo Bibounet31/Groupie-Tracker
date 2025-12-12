@@ -18,26 +18,43 @@ h1 {
     background: linear-gradient(90deg, #ffffff, #68c8d5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    margin-top: auto;
 }
 
 /* Bouton */
+
+/* Bouton fixe en bas à droite */
 a {
     font-family: "Century Gothic";
     display: inline-block;
     padding: 12px 28px;
-    border-radius: 30px;
+    border-radius: 15px;
     color: white;
     font-weight: bold;
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     text-decoration: none;
-    transition: 0.3s ease;
-    font-size: 20px;
-    position: fixed;       /* Fixé en bas */
-    bottom: 15px;
+    transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
+    font-size: 13px;
+    box-shadow: 0 6px 12px rgb(255, 255, 255);
+    background-color: rgba(56, 37, 37, 0.19); /* fond noir semi-transparent */
+
+    /* Position fixe en bas à droite */
+    position: fixed;
+    bottom: 20px;
     right: 10px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    z-index: 1000; /* pour être sûr qu'il reste au-dessus du contenu */
 }
+
+/* Effet au survol */
+a:hover {
+    transform: scale(1.1); /* grossit légèrement */
+    background-color: rgba(0, 5, 7, 0.53); /* fond un peu plus visible au survol */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
+}
+
 
 /* Tableau artistes */
 ul {

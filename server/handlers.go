@@ -9,6 +9,15 @@ type PageData struct {
 	A int
 }
 
+type Artist struct {
+	Id           int
+	Name         string
+	Image        string
+	Members      []string
+	CreationDate int
+}
+
+var AllArtists []Artist
 var counter int // global variable
 
 // send data to page
@@ -33,7 +42,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // load artist page
 func ArtistesHandler(w http.ResponseWriter, r *http.Request) {
-	render(w, "artistes.html", nil)
+	render(w, "artistes.html", AllArtists)
 }
 
 // when submit is sent

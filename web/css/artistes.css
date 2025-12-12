@@ -38,7 +38,7 @@ a {
     text-decoration: none;
     transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
     font-size: 13px;
-    box-shadow: 0 6px 12px rgb(255, 255, 255);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.37);
     background-color: rgba(56, 37, 37, 0.19); /* fond noir semi-transparent */
 
     /* Position fixe en bas à droite */
@@ -89,3 +89,26 @@ ul li {
     border-radius: 6px;
 }
 
+/* Style de l'input */
+input {
+    font-family: "Century Gothic";
+    display: inline-block;
+    padding: 12px 28px;
+    border-radius: 15px;
+    color: #000000;
+    font-weight: bold;
+    border: 1px solid rgb(0, 0, 0);
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
+    font-size: 13px;
+    box-shadow: 0 6px 12px rgb(0, 0, 0);
+    background-color: rgb(253, 253, 253); /* fond blanc semi-transparent */
+}
+
+/* Conteneur de l'input centré */
+.input-container {
+    display: flex;
+    justify-content: center; /* centre horizontalement */
+    margin: 20px 0;          /* un petit espace au-dessus et en-dessous */
+}

@@ -25,7 +25,7 @@ h1 {
 /* IMAGE ARTISTE */
 img {
     float: right;
-    width: 300px;
+    width: 260px;
     margin: 30px 0 60px 60px; /* le premier 60px correspond au margin-top */
     border-radius: 10px;
     border: 2px solid #000507;
@@ -57,12 +57,13 @@ ul {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
     color: #000507;
+    font-weight: bold;
 }
 
 /* Effet au survol */
 ul li:hover {
     transform: scale(1.1); /* grossit légèrement */
-    background-color: #3fff00; /* fond un peu plus visible au survol */
+    background-color: #1ed760; /* fond un peu plus visible au survol */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
 }
 

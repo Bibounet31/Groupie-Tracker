@@ -25,12 +25,13 @@ h1 {
 /* IMAGE ARTISTE */
 img {
     float: right;
-    width: 260px;
-    margin: 0 0 20px 20px;
+    width: 300px;
+    margin: 30px 0 60px 60px; /* le premier 60px correspond au margin-top */
     border-radius: 10px;
     border: 2px solid #000507;
     background: #000;
 }
+
 
 /* DATE DE CRÉATION */
 p {
@@ -110,3 +111,36 @@ body::after {
     display: block;
     clear: both;
 }
+
+.music-link {
+    position: fixed;     /* bouton fixe à l'écran */
+    right: 20px;         /* distance du bord droit */
+    z-index: 1000;
+
+    display: block;      /* empilement vertical */
+    width: 160px;        /* largeur uniforme */
+    padding: 12px 0;     /* hauteur du bouton */
+    text-align: center;
+    background-color: #1db954;
+    color: #0f2027;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-size:12px;
+    margin: 3px 0 60px 60px;
+}
+
+.music-link:hover {
+    background-color: #1ed760;
+}
+
+/* Position verticale pour empilement avec plus d’espace */
+.music-link:first-child {
+    top: 5px;           /* Spotify en haut */
+}
+
+.music-link:last-child {
+    top: 60px;          /* Deezer un peu plus bas */
+}
+

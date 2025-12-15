@@ -7,24 +7,55 @@
     <link rel="stylesheet" href="../css/artistes.css">
 </head>
 
-    <body>
+<body>
 
-        <a href="/">Back to menu</a>
-        <h1>Artists</h1>
+<a href="/">Back to menu</a>
+<h1>Artists</h1>
 
-        <div class="input-container">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+<!-- SEARCH BAR -->
+<div class="input-container">
+    <div class="autocomplete">
+        <select id="searchType">
+            <option value="artist">Artist</option>
+            <option value="member">Member</option>
+        </select>
+        <input type="text" id="myInput" placeholder="Search..." />
+        <ul id="suggestions"></ul>
+    </div>
+</div>
+
+<div class="filters-container">
+    <form id="filtersForm" method="get" action="/artists">
+        <div class="filters-top">
+            <label>
+                Year min:
+                <input type="number" name="year_min" placeholder="e.g., 1990">
+            </label>
+            <label>
+                Year max:
+                <input type="number" name="year_max" placeholder="e.g., 2020">
+            </label>
+            <label>
+                Number of members:
+                <input type="text" name="members_count" placeholder="e.g., 3 or 5+">
+            </label>
+            <button type="submit">Apply Filters</button>
         </div>
+    </form>
+</div>
 
-        <ul id="myUL">
-            {{ range . }}
-            <li>
-                <img src="{{ .Image }}" alt="" class="artist-img">
-                <a href="/details/{{ .Name | pathEscape }}">{{ .Name }}</a>
-            {{ end }}
-        </ul>
+<!-- ARTISTS LIST -->
+<ul id="myUL">
+    {{ range . }}
+    <li>
+        <img src="{{ .Image }}" alt="" class="artist-img">
+        <a href="/details/{{ .Name | pathEscape }}">{{ .Name }}</a>
+    </li>
+    {{ end }}
+</ul>
 
-        <script src="../js/script.js"></script>
+<!-- SCRIPTS -->
+<script src="../js/script.js"></script>
 
-    </body>
+</body>
 </html>

@@ -18,7 +18,7 @@ body {
 h1 {
     font-size: 42px;
     margin-bottom: 20px;
-    border-bottom: 2px solid #1db954; /* vert musique */
+    border-bottom: 2px solid #1db954;
     padding-bottom: 10px;
 }
 
@@ -26,12 +26,11 @@ h1 {
 img {
     float: right;
     width: 260px;
-    margin: 30px 0 60px 60px; /* le premier 60px correspond au margin-top */
+    margin: 30px 0 60px 60px;
     border-radius: 10px;
     border: 2px solid #000507;
     background: #000;
 }
-
 
 /* DATE DE CRÉATION */
 p {
@@ -62,9 +61,9 @@ ul {
 
 /* Effet au survol */
 ul li:hover {
-    transform: scale(1.1); /* grossit légèrement */
-    background-color: #1ed760; /* fond un peu plus visible au survol */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
+    transform: scale(1.1);
+    background-color: #1ed760;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 ul li {
@@ -86,6 +85,70 @@ ul li {
     font-weight: bold;
 }
 
+.carte h3 {
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+/* MAP STYLING */
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 2px solid #0f2027;
+}
+
+.concerts-list {
+    margin-top: 20px;
+}
+
+.concerts-list h4 {
+    margin-bottom: 15px;
+    color: #0f2027;
+    font-size: 20px;
+}
+
+.concert-item {
+    background: rgba(15, 32, 39, 0.2);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #0f2027;
+}
+
+.concert-item strong {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #0f2027;
+}
+
+.concert-item ul {
+    display: block;
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+    grid-template-columns: 1fr;
+}
+
+.concert-item li {
+    background: none;
+    padding: 5px 0;
+    border-radius: 0;
+    text-align: left;
+    font-size: 14px;
+    color: #0f2027;
+    transform: none;
+    box-shadow: none;
+}
+
+.concert-item li:hover {
+    background: none;
+    transform: none;
+    box-shadow: none;
+}
+
 /* LIEN RETOUR */
 a {
     display: inline-block;
@@ -101,9 +164,9 @@ a {
 
 /* Effet au survol */
 a:hover {
-    transform: scale(1.1); /* grossit légèrement */
-    background-color:  #1db954; /* fond un peu plus visible au survol */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
+    transform: scale(1.1);
+    background-color: #1db954;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 /* CLEAR FLOAT IMAGE */
@@ -114,13 +177,13 @@ body::after {
 }
 
 .music-link {
-    position: fixed;     /* bouton fixe à l'écran */
-    right: 20px;         /* distance du bord droit */
+    position: fixed;
+    right: 20px;
     z-index: 1000;
 
-    display: block;      /* empilement vertical */
-    width: 160px;        /* largeur uniforme */
-    padding: 12px 0;     /* hauteur du bouton */
+    display: block;
+    width: 160px;
+    padding: 12px 0;
     text-align: center;
     background-color: #1db954;
     color: #0f2027;
@@ -128,7 +191,7 @@ body::after {
     text-decoration: none;
     border-radius: 6px;
     transition: 0.3s;
-    font-size:12px;
+    font-size: 12px;
     margin: 3px 0 60px 60px;
 }
 
@@ -136,12 +199,11 @@ body::after {
     background-color: #1ed760;
 }
 
-/* Position verticale pour empilement avec plus d’espace */
+/* Position verticale pour empilement avec plus d'espace */
 .music-link:first-child {
-    top: 5px;           /* Spotify en haut */
+    top: 5px;
 }
 
 .music-link:last-child {
-    top: 60px;          /* Deezer un peu plus bas */
+    top: 60px;
 }
-

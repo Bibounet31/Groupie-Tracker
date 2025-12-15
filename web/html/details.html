@@ -3,46 +3,81 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Artists</title>
+    <title>{{ .Name }} - Details</title>
     <link rel="stylesheet" href="../css/details.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 
-      <body>
-          <h1>{{ .Name }}</h1>
-          <img src="{{ .Image }}" alt="">
-          <p>Membres :</p>
+<body>
+<h1>{{ .Name }}</h1>
+<img src="{{ .Image }}" alt="{{ .Name }}">
+<p>Membres :</p>
 
-          <ul>
-               {{ range .Members }}
-              <li>{{ . }}</li>
+<ul>
+    {{ range .Members }}
+    <li>{{ . }}</li>
+    {{ end }}
+</ul>
+
+<a href="/artistes">Back to artists</a>
+
+<div class="create">
+    Created in {{ .CreationDate }}
+</div>
+
+<div class="carte">
+    <h3>Concert Locations</h3>
+    <div id="map"></div>
+
+    <div class="concerts-list">
+        <h4>Upcoming Concerts:</h4>
+        {{ if .DatesLocations }}
+        {{ range $location, $dates := .DatesLocations }}
+        <div class="concert-item">
+            <strong>📍 {{ $location }}</strong>
+            <ul>
+                {{ range $dates }}
+                <li>{{ . }}</li>
                 {{ end }}
-          </ul>
-          <a href="/artistes">Back to artist</a>
+            </ul>
+        </div>
+        {{ end }}
+        {{ else }}
+        <p>No concert information available.</p>
+        {{ end }}
+    </div>
+</div>
 
-          <div class ="create">
-              Created in {{ .CreationDate }}
-          </div>
+<div>
+    <a href="https://open.spotify.com/search/{{ urlquery .Name }}"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="music-link">
+        🎧 Écouter sur Spotify
+    </a>
 
-          <div class ="carte">
-            Localisation des concerts
-          </div>
+    <a href="https://www.deezer.com/search/{{ urlquery .Name }}"
+       target="_blank"
+       rel="noopener noreferrer"
+       class="music-link">
+        🎵 Écouter sur Deezer
+    </a>
+</div>
 
-          <div>
-              <a href="https://open.spotify.com/search/{{ urlquery .Name }}"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 class="music-link">
-                  🎧 Écouter sur Spotify
-              </a>
+<!-- Pass concert data to JavaScript -->
+<script id="concert-data" type="application/json">
+    {
+    {{ $first := true }}
+    {{ range $location, $dates := .DatesLocations }}
+    {{ if not $first }},{{ end }}
+    "{{ $location }}": {{ len $dates }}
+    {{ $first = false }}
+    {{ end }}
+    }
+</script>
 
-              <a href="https://www.deezer.com/search/{{ urlquery .Name }}"
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 class="music-link">
-                  🎵 Écouter sur Deezer
-              </a>
+<script src="../js/map.js"></script>
 
-          </div>
-
-      </body>
+</body>
 </html>

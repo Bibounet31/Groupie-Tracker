@@ -247,6 +247,15 @@ ul li a {
     transform: scale(1.05);
 }
 
+.filters-top button.clear-btn {
+    background-color: rgba(183, 28, 28, 0.3);
+}
+
+.filters-top button.clear-btn:hover {
+    background-color: rgb(220, 38, 38);
+    transform: scale(1.05);
+}
+
 /* Ensure all text inputs truncate with "..." */
 .autocomplete input,
 .filters-top input {

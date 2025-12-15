@@ -7,29 +7,64 @@
     <link rel="stylesheet" href="../css/artistes.css">
 </head>
 
-    <body>
+<body>
 
-        <a href="/">Back to menu</a>
-        <h1>Artists</h1>
+<a href="/">Back to menu</a>
+<h1>Artists</h1>
 
-        <div class="input-container">
-            <div class="autocomplete">
-                <input type="text" id="myInput" placeholder="Search for names..">
-                <ul id="suggestions"></ul>
-            </div>
-        </div>
+<!-- SEARCH BAR -->
+<div class="input-container">
+    <div class="autocomplete">
+        <select id="searchType">
+            <option value="artist">Artist</option>
+            <option value="member">Member</option>
+        </select>
+        <input type="text" id="myInput" placeholder="Search..." />
+        <ul id="suggestions"></ul>
+    </div>
+</div>
 
+<!-- FILTERS -->
+<div class="filters-container">
+    <form id="filtersForm" method="get" action="/artists">
+        <!-- Interval filter: Creation year -->
+        <label>
+            Year min:
+            <input type="number" name="year_min" placeholder="e.g., 1990">
+        </label>
+        <label>
+            Year max:
+            <input type="number" name="year_max" placeholder="e.g., 2020">
+        </label>
 
+        <!-- Multiple selection: Number of members -->
+        <label>
+            Number of members:
+            <select name="members_count" multiple>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5+">5+</option>
+            </select>
+        </label>
 
-        <ul id="myUL">
-            {{ range . }}
-            <li>
-                <img src="{{ .Image }}" alt="" class="artist-img">
-                <a href="/details/{{ .Name | pathEscape }}">{{ .Name }}</a>
-            {{ end }}
-        </ul>
+        <button type="submit">Apply Filters</button>
+    </form>
+</div>
 
-        <script src="../js/script.js"></script>
+<!-- ARTISTS LIST -->
+<ul id="myUL">
+    {{ range . }}
+    <li>
+        <img src="{{ .Image }}" alt="" class="artist-img">
+        <a href="/details/{{ .Name | pathEscape }}">{{ .Name }}</a>
+    </li>
+    {{ end }}
+</ul>
 
-    </body>
+<!-- SCRIPTS -->
+<script src="../js/script.js"></script>
+
+</body>
 </html>

@@ -1,8 +1,10 @@
 const input = document.getElementById("myInput");
 const suggestions = document.getElementById("suggestions");
+const searchType = document.getElementById("searchType");
 
 input.addEventListener("input", async () => {
     const query = input.value.trim();
+    const type = searchType.value; // "artist" or "member"
 
     if (!query) {
         suggestions.innerHTML = "";
@@ -10,37 +12,47 @@ input.addEventListener("input", async () => {
         return;
     }
 
-    const res = await fetch(`/search?query=${encodeURIComponent(query)}`);
-    const names = await res.json();
+    const res = await fetch(`/search?query=${encodeURIComponent(query)}&type=${type}`);
+    const results = await res.json();
 
     suggestions.innerHTML = "";
-    if (names.length === 0) {
+    if (results.length === 0) {
         suggestions.style.display = "none";
         return;
     }
 
     suggestions.style.display = "block";
 
-    names.forEach(name => {
+    results.forEach(name => {
         const li = document.createElement("li");
         li.textContent = name;
         li.onclick = () => {
             input.value = name;
             suggestions.innerHTML = "";
             suggestions.style.display = "none";
-            window.location.href = `/details/${encodeURIComponent(name)}`;
+
+            // Redirect based on type
+            if (type === "artist") {
+                window.location.href = `/details/${encodeURIComponent(name)}`;
+            } else {
+                // For member search, redirect to filtered artist list
+                window.location.href = `/artists?member=${encodeURIComponent(name)}`;
+            }
         };
         suggestions.appendChild(li);
     });
 });
 
-// Handle Enter key
 input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         const query = input.value.trim();
-        if (query) {
-            // Redirect to artistes page with query
+        const type = searchType.value;
+        if (!query) return;
+
+        if (type === "artist") {
             window.location.href = `/artists?query=${encodeURIComponent(query)}`;
+        } else {
+            window.location.href = `/artists?member=${encodeURIComponent(query)}`;
         }
         e.preventDefault();
     }

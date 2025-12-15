@@ -22,8 +22,6 @@ h1 {
 }
 
 /* Bouton */
-
-/* Bouton fixe en bas à droite */
 a {
     font-family: "Century Gothic";
     display: inline-block;
@@ -37,29 +35,26 @@ a {
     transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
     font-size: 13px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.37);
-    background-color: rgba(56, 37, 37, 0.19); /* fond noir semi-transparent */
+    background-color: rgba(56, 37, 37, 0.19);
 
-    /* Position fixe en bas à droite */
     position: fixed;
     bottom: 20px;
     right: 10px;
-    z-index: 1000; /* pour être sûr qu'il reste au-dessus du contenu */
+    z-index: 1000;
 }
 
-/* Effet au survol */
 a:hover {
-    transform: scale(1.1); /* grossit légèrement */
-    background-color:  #1db954; /* fond un peu plus visible au survol */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
+    transform: scale(1.1);
+    background-color:  #1db954;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
-
 
 /* Tableau artistes */
 ul {
     list-style: none;
     padding: 0;
     margin: 40px auto;
-    width: 90%;            /* IMPORTANT pour la grille */
+    width: 90%;
     max-width: 1200px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -96,16 +91,116 @@ input {
     font-weight: bold;
     border: 1px solid rgb(0, 0, 0);
     backdrop-filter: blur(10px);
-    text-decoration: none;
     transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
     font-size: 13px;
     box-shadow: 0 6px 12px rgb(0, 0, 0);
-    background-color: rgb(253, 253, 253); /* fond blanc semi-transparent */
+    background-color: rgb(253, 253, 253);
 }
 
-/* Conteneur de l'input centré */
 .input-container {
     display: flex;
-    justify-content: center; /* centre horizontalement */
-    margin: 20px 0;          /* un petit espace au-dessus et en-dessous */
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* AUTOCOMPLETE */
+.autocomplete {
+    position: relative;
+    display: flex;
+    width: 400px; /* wider to fit select + input */
+    gap: 10px;
+}
+
+.autocomplete select {
+    font-family: "Century Gothic";
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: 1px solid rgb(0,0,0);
+    backdrop-filter: blur(10px);
+    font-size: 13px;
+    cursor: pointer;
+    background-color: rgb(253,253,253);
+}
+
+/* Suggestions list */
+#suggestions {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+
+    display: block;
+    grid-template-columns: none;
+
+    list-style: none;
+    margin: 5px 0 0 0;
+    padding: 0;
+
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+/* Suggestion item */
+#suggestions li {
+    padding: 10px 15px;
+    font-family: "Century Gothic";
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#suggestions li:last-child {
+    border-bottom: none;
+}
+
+#suggestions li:hover {
+    background: rgba(104, 200, 213, 0.3);
+}
+
+/* ========================= */
+/* FILTERS SECTION */
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-family: "Century Gothic";
+}
+
+.filters-container label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.filters-container input,
+.filters-container select {
+    margin-top: 5px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 1px solid #000;
+    font-size: 13px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    background-color: #fff;
+}
+
+.filters-container button {
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: rgba(56, 37, 37, 0.19);
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: 0.3s ease;
+}
+
+.filters-container button:hover {
+    background-color: rgba(0, 5, 7, 0.53);
+    transform: scale(1.05);
 }

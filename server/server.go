@@ -11,6 +11,8 @@ func Start() {
 	http.HandleFunc("/submit", SubmitHandler)
 	http.HandleFunc("/artistes", ArtistesHandler)
 	http.HandleFunc("/details/", DetailsHandler)
+	http.HandleFunc("/search", SearchHandler)
+	http.HandleFunc("/artists", SearchResultsHandler)
 
 	// Static files
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("web/css"))))

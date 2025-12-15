@@ -1,6 +1,7 @@
 package server
 
 import (
+	"encoding/json"
 	"html/template"
 	"net/http"
 	"net/url"
@@ -46,6 +47,41 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 // load artist page
 func ArtistesHandler(w http.ResponseWriter, r *http.Request) {
 	render(w, "artistes.html", AllArtists)
+}
+
+func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query().Get("query")
+	query = strings.TrimSpace(strings.ToLower(query))
+
+	var results []Artist
+	if query != "" {
+		for _, artist := range AllArtists {
+			if strings.Contains(strings.ToLower(artist.Name), query) {
+				results = append(results, artist)
+			}
+		}
+	}
+
+	// Render artistes.html with filtered artists
+	render(w, "artistes.html", results)
+}
+
+// SearchHandler returns matching artist names as JSON
+func SearchHandler(w http.ResponseWriter, r *http.Request) {
+	query := r.URL.Query().Get("query")
+	query = strings.TrimSpace(strings.ToLower(query))
+
+	var results []string
+	if query != "" {
+		for _, artist := range AllArtists {
+			if strings.Contains(strings.ToLower(artist.Name), query) {
+				results = append(results, artist.Name)
+			}
+		}
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(results)
 }
 
 func DetailsHandler(w http.ResponseWriter, r *http.Request) {

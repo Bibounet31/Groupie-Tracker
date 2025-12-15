@@ -1,10 +1,9 @@
-/* General page styling */
 body {
     background-image: url("../img/miku.jpg");
-    background-size: cover;         /* L’image couvre tout l’écran */
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;   /* => L’image reste affichée même en scrollant */
+    background-attachment: fixed;
     margin: 0;
     padding: 20px;
 }
@@ -24,8 +23,6 @@ h1 {
 }
 
 /* Bouton */
-
-/* Bouton fixe en bas à droite */
 a {
     font-family: "Century Gothic";
     display: inline-block;
@@ -39,29 +36,26 @@ a {
     transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
     font-size: 13px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.37);
-    background-color: rgba(56, 37, 37, 0.19); /* fond noir semi-transparent */
+    background-color: rgba(56, 37, 37, 0.19);
 
-    /* Position fixe en bas à droite */
     position: fixed;
     bottom: 20px;
     right: 10px;
-    z-index: 1000; /* pour être sûr qu'il reste au-dessus du contenu */
+    z-index: 1000;
 }
 
-/* Effet au survol */
 a:hover {
-    transform: scale(1.1); /* grossit légèrement */
-    background-color: rgba(0, 5, 7, 0.53); /* fond un peu plus visible au survol */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
+    transform: scale(1.1);
+    background-color: rgba(0, 5, 7, 0.53);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
-
 
 /* Tableau artistes */
 ul {
     list-style: none;
     padding: 0;
     margin: 40px auto;
-    width: 90%;            /* IMPORTANT pour la grille */
+    width: 90%;
     max-width: 1200px;
 
     display: grid;
@@ -99,16 +93,63 @@ input {
     font-weight: bold;
     border: 1px solid rgb(0, 0, 0);
     backdrop-filter: blur(10px);
-    text-decoration: none;
     transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
     font-size: 13px;
     box-shadow: 0 6px 12px rgb(0, 0, 0);
-    background-color: rgb(253, 253, 253); /* fond blanc semi-transparent */
+    background-color: rgb(253, 253, 253);
 }
 
-/* Conteneur de l'input centré */
 .input-container {
     display: flex;
-    justify-content: center; /* centre horizontalement */
-    margin: 20px 0;          /* un petit espace au-dessus et en-dessous */
+    justify-content: center;
+    margin: 20px 0;
 }
+
+
+/* AUTOCOMPLETE */
+
+
+.autocomplete {
+    position: relative;
+    width: 300px;
+}
+
+/* Suggestions list */
+#suggestions {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+
+    display: block;
+    grid-template-columns: none;
+
+    list-style: none;
+    margin: 5px 0 0 0;
+    padding: 0;
+
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+/* Suggestion item */
+#suggestions li {
+    padding: 10px 15px;
+    font-family: "Century Gothic";
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#suggestions li:last-child {
+    border-bottom: none;
+}
+
+#suggestions li:hover {
+    background: rgba(104, 200, 213, 0.3);
+}
+

@@ -13,8 +13,13 @@
         <h1>Artists</h1>
 
         <div class="input-container">
-            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+            <div class="autocomplete">
+                <input type="text" id="myInput" placeholder="Search for names..">
+                <ul id="suggestions"></ul>
+            </div>
         </div>
+
+
 
         <ul id="myUL">
             {{ range . }}

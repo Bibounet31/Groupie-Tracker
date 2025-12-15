@@ -3,6 +3,14 @@ if (typeof L !== 'undefined') {
     const mapElement = document.getElementById('map');
 
     if (mapElement) {
+        // Fix Leaflet's default icon path issue
+        delete L.Icon.Default.prototype._getIconUrl;
+        L.Icon.Default.mergeOptions({
+            iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        });
+
         // Initialize map
         const map = L.map('map').setView([20, 0], 2);
 

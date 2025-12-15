@@ -24,7 +24,7 @@ h1 {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 200% auto;
-    animation: shimmer 3s linear infinite;
+    animation: shimmer 3s linear infinite, titleSlideIn 0.5s ease-out 0.1s backwards;
 
     /* Glassmorphism container */
     padding: 25px 50px;
@@ -52,6 +52,18 @@ h1::before {
 @keyframes shimmer {
     to {
         background-position: 200% center;
+    }
+}
+
+/* Title slide in animation */
+@keyframes titleSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
@@ -262,4 +274,147 @@ ul li a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Page transition animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* WARP SPEED - Super fast zoom with motion blur */
+@keyframes warpIn {
+    from {
+        opacity: 0;
+        transform: scale(0.3) translateZ(0);
+        filter: blur(20px);
+    }
+    50% {
+        filter: blur(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateZ(0);
+        filter: blur(0);
+    }
+}
+
+@keyframes warpOut {
+    from {
+        opacity: 1;
+        transform: scale(1) translateZ(0);
+        filter: blur(0);
+    }
+    50% {
+        filter: blur(15px);
+    }
+    to {
+        opacity: 0;
+        transform: scale(3) translateZ(0);
+        filter: blur(30px);
+    }
+}
+
+body {
+    animation: warpIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+body.page-transitioning {
+    animation: warpOut 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards;
+}
+
+/* Artist cards staggered animation */
+#myUL li {
+    opacity: 0;
+    animation: cardPop 0.3s ease-out forwards;
+}
+
+@keyframes cardPop {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+#myUL li:nth-child(1) { animation-delay: 0.02s; }
+#myUL li:nth-child(2) { animation-delay: 0.04s; }
+#myUL li:nth-child(3) { animation-delay: 0.06s; }
+#myUL li:nth-child(4) { animation-delay: 0.08s; }
+#myUL li:nth-child(5) { animation-delay: 0.1s; }
+#myUL li:nth-child(6) { animation-delay: 0.12s; }
+#myUL li:nth-child(7) { animation-delay: 0.14s; }
+#myUL li:nth-child(8) { animation-delay: 0.16s; }
+#myUL li:nth-child(9) { animation-delay: 0.18s; }
+#myUL li:nth-child(10) { animation-delay: 0.2s; }
+#myUL li:nth-child(n+11) { animation-delay: 0.2s; }
+
+/* Smooth hover scale effect on artist cards */
+#myUL li {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#myUL li:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Title animation */
+h1 {
+    opacity: 0;
+    animation: titleSlide 0.5s ease-out 0.1s forwards;
+}
+
+@keyframes titleSlide {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Search bar animation */
+.input-container {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out 0.15s forwards;
+}
+
+/* Filters animation */
+.filters-container {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out 0.2s forwards;
 }

@@ -9,10 +9,6 @@ import (
 	"strings"
 )
 
-type PageData struct {
-	A int
-}
-
 type Artist struct {
 	Id           int
 	Name         string
@@ -41,8 +37,7 @@ func render(w http.ResponseWriter, file string, data any) {
 
 // load index page
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	data := PageData{A: counter}
-	render(w, "index.html", data)
+	render(w, "index.html", nil)
 }
 
 // load artist page

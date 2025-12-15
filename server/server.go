@@ -5,9 +5,31 @@ import (
 	"net/http"
 )
 
+type responseWriterWrapper struct {
+	http.ResponseWriter
+	wroteHeader bool
+}
+
+func (rw *responseWriterWrapper) WriteHeader(statusCode int) {
+	rw.wroteHeader = true
+	rw.ResponseWriter.WriteHeader(statusCode)
+}
+
+func (rw *responseWriterWrapper) Write(b []byte) (int, error) {
+	rw.wroteHeader = true
+	return rw.ResponseWriter.Write(b)
+}
+
 func Start() {
 	// Routes
-	http.HandleFunc("/", IndexHandler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/" {
+			NotFoundHandler(w, r)
+			return
+		}
+		IndexHandler(w, r)
+	})
+
 	http.HandleFunc("/submit", SubmitHandler)
 	http.HandleFunc("/artistes", ArtistesHandler)
 	http.HandleFunc("/details/", DetailsHandler)
@@ -18,6 +40,18 @@ func Start() {
 	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("web/css"))))
 	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("web/img"))))
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("web/js"))))
+
 	fmt.Println("✅ Server running at http://localhost:8080")
-	http.ListenAndServe(":8080", nil)
+
+	// Wrap default mux to handle 404
+	handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		rw := &responseWriterWrapper{ResponseWriter: w}
+		http.DefaultServeMux.ServeHTTP(rw, r)
+
+		if !rw.wroteHeader {
+			NotFoundHandler(w, r)
+		}
+	})
+
+	http.ListenAndServe(":8080", handler)
 }

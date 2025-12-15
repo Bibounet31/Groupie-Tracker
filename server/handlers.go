@@ -229,3 +229,8 @@ func SubmitHandler(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/", 303)
 }
+
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+	render(w, "404.html", nil)
+}

@@ -24,32 +24,23 @@
     </div>
 </div>
 
-<!-- FILTERS -->
 <div class="filters-container">
     <form id="filtersForm" method="get" action="/artists">
-        <!-- Interval filter: Creation year -->
-        <label>
-            Year min:
-            <input type="number" name="year_min" placeholder="e.g., 1990">
-        </label>
-        <label>
-            Year max:
-            <input type="number" name="year_max" placeholder="e.g., 2020">
-        </label>
-
-        <!-- Number of members -->
-        <label>
-            Number of members:
-            <select name="members_count" multiple>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5+">5+</option>
-            </select>
-        </label>
-
-        <button type="submit">Apply Filters</button>
+        <div class="filters-top">
+            <label>
+                Year min:
+                <input type="number" name="year_min" placeholder="e.g., 1990">
+            </label>
+            <label>
+                Year max:
+                <input type="number" name="year_max" placeholder="e.g., 2020">
+            </label>
+            <label>
+                Number of members:
+                <input type="text" name="members_count" placeholder="e.g., 3 or 5+">
+            </label>
+            <button type="submit">Apply Filters</button>
+        </div>
     </form>
 </div>
 

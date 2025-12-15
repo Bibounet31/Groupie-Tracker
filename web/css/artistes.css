@@ -1,13 +1,20 @@
 /* General page styling */
 body {
     font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
     color: #ffffff;
     padding: 40px 20px;
     line-height: 1.6;
+
+    background-image:
+            linear-gradient(rgba(0, 0, 0, 0.79), rgba(0, 0, 0, 0.8)),
+            url("../img/miku.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-/* Titre */
+/* Title */
 h1 {
     text-align: center;
     font-family: "Century Gothic";
@@ -21,7 +28,7 @@ h1 {
     margin-top: auto;
 }
 
-/* Bouton */
+/* Back button */
 a {
     font-family: "Century Gothic";
     display: inline-block;
@@ -45,11 +52,11 @@ a {
 
 a:hover {
     transform: scale(1.1);
-    background-color:  #1db954;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    background-color: #02b7bf;
+    box-shadow: 0 8px 16px rgb(0, 40, 42);
 }
 
-/* Tableau artistes */
+/* Artists table */
 ul {
     list-style: none;
     padding: 0;
@@ -62,7 +69,6 @@ ul {
     font-family: "Century Gothic";
 }
 
-/* Cellule */
 ul li {
     display: flex;
     align-items: center;
@@ -73,7 +79,6 @@ ul li {
     backdrop-filter: blur(10px);
 }
 
-/* Image artiste */
 .artist-img {
     width: 60px;
     height: 60px;
@@ -81,45 +86,42 @@ ul li {
     border-radius: 6px;
 }
 
-/* Style de l'input */
-input {
-    font-family: "Century Gothic";
-    display: inline-block;
-    padding: 12px 28px;
-    border-radius: 15px;
-    color: #000000;
-    font-weight: bold;
-    border: 1px solid rgb(0, 0, 0);
-    backdrop-filter: blur(10px);
-    transition: 0.3s ease, transform 0.2s ease, background-color 0.3s ease;
-    font-size: 13px;
-    box-shadow: 0 6px 12px rgb(0, 0, 0);
-    background-color: rgb(253, 253, 253);
+/* Truncate artist names if too long */
+ul li a {
+    display: block;
+    max-width: 150px; /* adjust as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+/* Search bar */
 .input-container {
     display: flex;
     justify-content: center;
     margin: 20px 0;
 }
 
-/* AUTOCOMPLETE */
 .autocomplete {
     position: relative;
     display: flex;
-    width: 400px; /* wider to fit select + input */
+    width: 400px;
     gap: 10px;
 }
 
-.autocomplete select {
+.autocomplete select,
+.autocomplete input {
     font-family: "Century Gothic";
     padding: 10px 15px;
     border-radius: 15px;
-    border: 1px solid rgb(0,0,0);
+    border: 1px solid #000;
     backdrop-filter: blur(10px);
     font-size: 13px;
     cursor: pointer;
-    background-color: rgb(253,253,253);
+    background-color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Suggestions list */
@@ -128,29 +130,26 @@ input {
     top: 110%;
     left: 0;
     width: 100%;
-
     display: block;
-    grid-template-columns: none;
-
     list-style: none;
     margin: 5px 0 0 0;
     padding: 0;
-
     background: rgba(255, 255, 255, 0.95);
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     z-index: 999;
-
     max-height: 180px;
     overflow-y: auto;
 }
 
-/* Suggestion item */
 #suggestions li {
     padding: 10px 15px;
     font-family: "Century Gothic";
     cursor: pointer;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #suggestions li:last-child {
@@ -161,46 +160,69 @@ input {
     background: rgba(104, 200, 213, 0.3);
 }
 
-/* ========================= */
-/* FILTERS SECTION */
+/* Filters container */
 .filters-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
     justify-content: center;
-    margin-bottom: 20px;
-    font-family: "Century Gothic";
+    margin: 10px auto 30px auto;
+    width: 100%;
+    max-width: 480px;
 }
 
-.filters-container label {
+.filters-top {
+    display: flex;
+    gap: 15px; /* space between inputs */
+    flex-wrap: nowrap; /* keep all on one row */
+    justify-content: center;
+    width: 100%;
+    align-items: center; /* vertical alignment */
+}
+
+.filters-top label {
     display: flex;
     flex-direction: column;
     font-size: 14px;
 }
 
-.filters-container input,
-.filters-container select {
+.filters-top input {
     margin-top: 5px;
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-radius: 12px;
-    border: 1px solid #000;
+    border: 1px solid #00f5ff;
     font-size: 13px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     background-color: #fff;
+    width: 120px; /* fixed width */
+    height: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.filters-container button {
-    padding: 10px 20px;
+.filters-top button {
+    margin-top: 5px;
+    height: 40px;
+    padding: 0 20px;
     border-radius: 15px;
     border: none;
-    background-color: rgba(56, 37, 37, 0.19);
+    background-color: rgba(56, 37, 37, 0.19); /* default button color */
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 6px rgb(0, 40, 42);
     transition: 0.3s ease;
+    flex-shrink: 0;
+    color: #ffffff;
 }
 
-.filters-container button:hover {
-    background-color: rgba(0, 5, 7, 0.53);
+.filters-top button:hover {
+    background-color: rgb(2, 183, 191);
     transform: scale(1.05);
+}
+
+/* Ensure all text inputs truncate with "..." */
+.autocomplete input,
+.filters-top input {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

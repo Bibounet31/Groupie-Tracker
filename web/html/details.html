@@ -1,0 +1,9 @@
+<h1>{{ .Name }}</h1>
+<img src="{{ .Image }}" alt="">
+<p>Created in {{ .CreationDate }}</p>
+
+<ul>
+  {{ range .Members }}
+  <li>{{ . }}</li>
+  {{ end }}
+</ul>

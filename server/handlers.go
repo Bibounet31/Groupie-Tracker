@@ -3,6 +3,8 @@ package server
 import (
 	"html/template"
 	"net/http"
+	"net/url"
+	"strings"
 )
 
 type PageData struct {
@@ -23,7 +25,8 @@ var counter int // global variable
 // send data to page
 func render(w http.ResponseWriter, file string, data any) {
 	funcMap := template.FuncMap{
-		"add": func(a, b int) int { return a + b },
+		"add":        func(a, b int) int { return a + b },
+		"pathEscape": url.PathEscape,
 	}
 
 	t, err := template.New(file).Funcs(funcMap).ParseFiles("web/html/" + file)
@@ -43,6 +46,26 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 // load artist page
 func ArtistesHandler(w http.ResponseWriter, r *http.Request) {
 	render(w, "artistes.html", AllArtists)
+}
+
+func DetailsHandler(w http.ResponseWriter, r *http.Request) {
+	path := strings.TrimPrefix(r.URL.Path, "/details/")
+	name, err := url.PathUnescape(path)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	name = strings.TrimSpace(name)
+
+	for _, artist := range AllArtists {
+		if strings.EqualFold(artist.Name, name) {
+			render(w, "details.html", artist)
+			return
+		}
+	}
+
+	http.NotFound(w, r)
 }
 
 // when submit is sent

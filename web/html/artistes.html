@@ -20,8 +20,7 @@
             {{ range . }}
             <li>
                 <img src="{{ .Image }}" alt="" class="artist-img">
-                <a href="details.html">{{ .Name }}</a>
-            </li>
+                <a href="/details/{{ .Name | pathEscape }}">{{ .Name }}</a>
             {{ end }}
         </ul>
 

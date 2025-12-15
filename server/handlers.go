@@ -42,6 +42,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // load artist page
 func ArtistesHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(AllArtists)
 	render(w, "artistes.html", AllArtists)
 }
 
@@ -53,7 +54,15 @@ func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 	// Filter parameters
 	yearMinStr := r.URL.Query().Get("year_min")
 	yearMaxStr := r.URL.Query().Get("year_max")
-	membersCounts := r.URL.Query()["members_count"] // can be multiple
+	membersCounts := r.URL.Query()["members_count"]
+
+	// DEBUG: Print what we received
+	fmt.Printf("DEBUG \n")
+	fmt.Printf("  query: '%s'\n", query)
+	fmt.Printf("  member: '%s'\n", member)
+	fmt.Printf("  year_min: '%s'\n", yearMinStr)
+	fmt.Printf("  year_max: '%s'\n", yearMaxStr)
+	fmt.Printf("  members_count: %v\n", membersCounts)
 
 	var yearMin, yearMax int
 	if yearMinStr != "" {
@@ -63,47 +72,60 @@ func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Sscanf(yearMaxStr, "%d", &yearMax)
 	}
 
+	fmt.Printf("  Parsed yearMin: %d, yearMax: %d\n", yearMin, yearMax)
+
 	// Convert membersCounts to integers
 	var membersFilter []int
 	for _, s := range membersCounts {
 		if s == "5+" {
-			membersFilter = append(membersFilter, 5) // we'll treat 5 as "5 or more"
+			membersFilter = append(membersFilter, 5)
 		} else {
 			var n int
 			fmt.Sscanf(s, "%d", &n)
-			membersFilter = append(membersFilter, n)
+			if n > 0 {
+				membersFilter = append(membersFilter, n)
+			}
 		}
 	}
 
 	var results []Artist
 	for _, artist := range AllArtists {
-		// Artist/member search
-		match := false
-		if query != "" {
-			if strings.Contains(strings.ToLower(artist.Name), query) {
-				match = true
-			} else if member != "" {
+		match := true
+
+		// Artist/member search filter
+		if query != "" || member != "" {
+			searchMatch := false
+
+			if query != "" && strings.Contains(strings.ToLower(artist.Name), query) {
+				searchMatch = true
+			}
+
+			if member != "" {
 				for _, m := range artist.Members {
 					if strings.Contains(strings.ToLower(m), member) {
-						match = true
+						searchMatch = true
 						break
 					}
 				}
 			}
-		} else {
-			match = true // no query = match all
+
+			if !searchMatch {
+				match = false
+			}
 		}
 
-		// Filter by year
-		if yearMin != 0 && artist.CreationDate < yearMin {
+		// Filter by year min
+		if match && yearMin != 0 && artist.CreationDate < yearMin {
 			match = false
 		}
-		if yearMax != 0 && artist.CreationDate > yearMax {
+
+		// Filter by year max
+		if match && yearMax != 0 && artist.CreationDate > yearMax {
 			match = false
 		}
 
 		// Filter by number of members
-		if len(membersFilter) > 0 {
+		if match && len(membersFilter) > 0 {
 			memberCount := len(artist.Members)
 			matchedCount := false
 			for _, mc := range membersFilter {
@@ -124,6 +146,8 @@ func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 			results = append(results, artist)
 		}
 	}
+
+	fmt.Printf("  Total results: %d\n\n", len(results))
 
 	render(w, "artistes.html", results)
 }

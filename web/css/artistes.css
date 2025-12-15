@@ -14,18 +14,45 @@ body {
     background-attachment: fixed;
 }
 
-/* Title */
+/* Title - Enhanced with glassmorphism effect */
 h1 {
     text-align: center;
     font-family: "Century Gothic";
     font-size: 60px;
     font-weight: bold;
-    background: linear-gradient(90deg, #ffffff, #fdfdfd);
+    background: linear-gradient(90deg, #68c8d5, #ffffff, #68c8d5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    border: 1px solid rgb(0, 5, 7);
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+
+    /* Glassmorphism container */
+    padding: 25px 50px;
+    margin: 0 auto 40px auto;
+    max-width: fit-content;
+    position: relative;
+}
+
+h1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
-    margin-top: auto;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    z-index: -1;
+}
+
+/* Shimmer animation for title */
+@keyframes shimmer {
+    to {
+        background-position: 200% center;
+    }
 }
 
 /* Back button */
@@ -89,7 +116,7 @@ ul li {
 /* Truncate artist names if too long */
 ul li a {
     display: block;
-    max-width: 150px; /* adjust as needed */
+    max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -150,6 +177,7 @@ ul li a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #0f2027;
 }
 
 #suggestions li:last-child {
@@ -171,11 +199,11 @@ ul li a {
 
 .filters-top {
     display: flex;
-    gap: 15px; /* space between inputs */
-    flex-wrap: nowrap; /* keep all on one row */
+    gap: 15px;
+    flex-wrap: nowrap;
     justify-content: center;
     width: 100%;
-    align-items: center; /* vertical alignment */
+    align-items: center;
 }
 
 .filters-top label {
@@ -192,7 +220,7 @@ ul li a {
     font-size: 13px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     background-color: #fff;
-    width: 120px; /* fixed width */
+    width: 120px;
     height: 40px;
     white-space: nowrap;
     overflow: hidden;
@@ -205,7 +233,7 @@ ul li a {
     padding: 0 20px;
     border-radius: 15px;
     border: none;
-    background-color: rgba(56, 37, 37, 0.19); /* default button color */
+    background-color: rgba(56, 37, 37, 0.19);
     font-weight: bold;
     cursor: pointer;
     box-shadow: 0 3px 6px rgb(0, 40, 42);

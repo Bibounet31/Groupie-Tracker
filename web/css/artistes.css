@@ -3,8 +3,8 @@ body {
     font-family: "Segoe UI", Arial, sans-serif;
     color: #ffffff;
     padding: 40px 20px;
-    line-height: 1.6;
-    background: linear-gradient(180deg, #23404b, #4d6e7a, #405d69);
+    line-height: 1.6;background: linear-gradient(180deg, #23404b, #4d6e7a, #405d69);
+
     background-size: cover;
 }
 

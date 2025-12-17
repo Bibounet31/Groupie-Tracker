@@ -4,14 +4,8 @@ body {
     color: #ffffff;
     padding: 40px 20px;
     line-height: 1.6;
-
-    background-image:
-            linear-gradient(rgba(0, 0, 0, 0.79), rgba(0, 0, 0, 0.8)),
-            url("../img/miku.jpg");
+    background: linear-gradient(180deg, #23404b, #4d6e7a, #405d69);
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
 }
 
 /* Title - Enhanced with glassmorphism effect */
@@ -81,7 +75,6 @@ a {
     font-size: 13px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.37);
     background-color: rgba(56, 37, 37, 0.19);
-
     position: fixed;
     bottom: 20px;
     right: 10px;

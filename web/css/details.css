@@ -268,11 +268,10 @@ body::after {
 }
 
 .music-link {
-    position: fixed;
+    position: absolute;
+    top: 15px;              /* même hauteur pour les deux */
     right: 20px;
-    z-index: 1000;
-
-    display: block;
+    display: inline-block;
     width: 160px;
     padding: 12px 0;
     text-align: center;
@@ -283,18 +282,38 @@ body::after {
     border-radius: 6px;
     transition: 0.3s;
     font-size: 12px;
-    margin: 3px 0 60px 60px;
+}
+
+/* Décalage horizontal du 2e bouton */
+.music-link + .music-link {
+    right: 190px;           /* espace entre les deux boutons */
 }
 
 .music-link:hover {
     background-color: #1ed760;
+    transform: scale(1.08);
 }
 
-/* Position verticale pour empilement avec plus d'espace */
-.music-link:first-child {
-    top: 5px;
+/* Bouton Wikipédia (encore plus à gauche) */
+.wikipedia-link {
+    position: absolute;
+    top: 15px;
+    right: 360px;
+    width: 160px;
+    padding: 12px 0;
+    text-align: center;
+    background-color: #1db954;
+    color: #0f2027;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-size: 12px;
 }
 
-.music-link:last-child {
-    top: 60px;
+/* Hover commun */
+.music-link:hover,
+.wikipedia-link:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }

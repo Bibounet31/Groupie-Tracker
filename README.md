@@ -1,6 +1,5 @@
 # 🎵 Groupie Trackers
 
-![Groupie Trackers Logo](web/img/logo.jpeg)
 
 ## 📋 Objectif du Projet
 

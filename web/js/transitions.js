@@ -31,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    const backToArtists = document.querySelector('a[href="/artistes"]');
+    const backToArtists = document.querySelector('a[href="/albums"]');
     if (backToArtists) {
         backToArtists.addEventListener('click', (e) => {
             e.preventDefault();
-            smoothTransition('/artistes');
+            smoothTransition('/albums');
         });
     }
 

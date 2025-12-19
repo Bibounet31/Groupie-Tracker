@@ -273,8 +273,6 @@ L'application gère plusieurs types d'erreurs :
 
 ---
 
-## 👥 Auteurs
-
 © 2025 Groupie Tracker
 
 ---

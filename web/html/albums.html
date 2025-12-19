@@ -45,6 +45,44 @@
     </form>
 </div>
 
+<button id="theme-toggle" aria-label="Changer le thème">
+    🌙
+</button>
+
+<script>
+    const toggleBtn = document.getElementById("theme-toggle");
+    const root = document.documentElement;
+
+    // Charger le thème sauvegardé
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+        root.setAttribute("data-theme", savedTheme);
+        toggleBtn.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        const isDark = root.getAttribute("data-theme") === "dark";
+
+        if (isDark) {
+            root.removeAttribute("data-theme");
+            localStorage.setItem("theme", "light");
+            toggleBtn.textContent = "🌙";
+        } else {
+            root.setAttribute("data-theme", "dark");
+            localStorage.setItem("theme", "dark");
+            toggleBtn.textContent = "☀️";
+        }
+    });
+</script>
+
+<script>
+    if (!localStorage.getItem("theme")) {
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        }
+    }
+</script>
+
 <!-- ARTISTS LIST -->
 <ul id="myUL">
     {{ range . }}

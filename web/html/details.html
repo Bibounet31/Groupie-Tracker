@@ -12,7 +12,7 @@
 <body>
 <h1>{{ .Name }}</h1>
 <img src="{{ .Image }}" alt="{{ .Name }}">
-<p>Membres :</p>
+<p>Members :</p>
 
 <ul>
     {{ range .Members }}
@@ -54,14 +54,14 @@
        target="_blank"
        rel="noopener noreferrer"
        class="music-link">
-        🎧 Écouter sur Spotify
+        🎧 Spotify
     </a>
 
     <a href="https://www.deezer.com/search/{{ urlquery .Name }}"
        target="_blank"
        rel="noopener noreferrer"
        class="music-link">
-        🎵 Écouter sur Deezer
+        🎵  Deezer
     </a>
 
     <a href="https://en.wikipedia.org/wiki/{{ urlquery .Name }}"

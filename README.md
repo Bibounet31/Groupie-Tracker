@@ -1,702 +1,293 @@
-# 🎵 Groupie Tracker
+# 🎵 Groupie Trackers
 
-A web application built in Go that displays, searches, and filters music artists and their concert information using the GroupieTrackers API.
+![Groupie Trackers Logo](web/img/logo.jpeg)
 
-![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=flat&logo=go)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-active-success)
+## 📋 Objectif du Projet
 
----
+Groupie Trackers est une application web développée en Go qui permet d'afficher, rechercher et filtrer des artistes musicaux ainsi que leurs concerts à partir de l'API officielle Groupie Trackers. Le projet offre une expérience utilisateur interactive avec visualisation cartographique des lieux de concerts.
 
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Demo](#-demo)
-- [Project Structure](#-project-structure)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [API Documentation](#-api-documentation)
-- [How It Works](#-how-it-works)
-- [Contributing](#-contributing)
-- [Troubleshooting](#-troubleshooting)
-- [License](#-license)
+### Fonctionnalités principales :
+- 🎤 Affichage d'une liste complète d'artistes
+- 🔍 Recherche avancée (par nom d'artiste ou membre)
+- 🎛️ Filtres multiples (année de création, nombre de membres)
+- 📍 Carte interactive des lieux de concerts (Leaflet.js)
+- 🎨 Interface moderne avec animations fluides
+- 📱 Design responsive
 
 ---
 
-## ✨ Features
+## 🚀 Comment Lancer le Projet
 
-- 🎨 **Beautiful UI** - Glassmorphism design with smooth animations
-- 🔍 **Smart Search** - Search by artist name or band member with autocomplete
-- 🎯 **Advanced Filters** - Filter by creation year and member count
-- 🗺️ **Interactive Map** - View concert locations on an interactive world map
-- 📱 **Responsive Design** - Works on desktop and mobile devices
-- 🎧 **Music Integration** - Direct links to Spotify and Deezer
-- ⚡ **Fast Performance** - No database needed, all data in memory
-- 🎭 **Smooth Transitions** - Page animations for a polished experience
+### Prérequis
+- Go 1.16 ou supérieur installé sur votre machine
+- Connexion internet (pour l'API et les cartes)
 
----
+### Installation et Démarrage
 
-## 🎬 Demo
-
+1. **Cloner le repository**
 ```bash
-# Start the server
-go run cmd/main.go
-
-# Open in browser
-http://localhost:8080
-```
-
-### Screenshots
-
-**Home Page**
-```
-┌─────────────────────────────────┐
-│      Groupie Trackers 🎵        │
-│                                 │
-│         [Artist]                │
-│                                 │
-│   Search and discover music     │
-│   artists and their concerts    │
-└─────────────────────────────────┘
-```
-
-**Artist List with Search**
-```
-┌─────────────────────────────────┐
-│  [Artist ▼] [Search...____]     │
-│  Year: [1990] - [2020]          │
-│                                 │
-│  🎸 Queen        🎤 Beatles     │
-│  🎹 Metallica    🎺 Jazz Band   │
-└─────────────────────────────────┘
-```
-
-**Artist Details with Map**
-```
-┌─────────────────────────────────┐
-│  Queen                    [img] │
-│  Members: Freddie Mercury...    │
-│  Created: 1970                  │
-│                                 │
-│  🗺️ Concert Map                 │
-│  ┌─────────────────────────┐   │
-│  │    🔴 London (5)        │   │
-│  │       🔴 Paris (3)      │   │
-│  └─────────────────────────┘   │
-│                                 │
-│  📍 London, UK                  │
-│    • 10-01-2024                 │
-│    • 11-01-2024                 │
-└─────────────────────────────────┘
-```
-
----
-
-## 🛠️ Tech Stack
-
-### Backend
-- **[Go](https://golang.org/)** - Main programming language
-- **net/http** - HTTP server and routing
-- **html/template** - Template rendering
-- **encoding/json** - JSON parsing
-
-### Frontend
-- **HTML5** - Page structure
-- **CSS3** - Styling with glassmorphism effects
-- **Vanilla JavaScript** - No frameworks needed
-- **[Leaflet.js](https://leafletjs.com/)** - Interactive maps
-
-### External APIs
-- **[GroupieTrackers API](https://groupietrackers.herokuapp.com/api)** - Artist data
-- **[Nominatim](https://nominatim.openstreetmap.org/)** - Geocoding service
-- **[OpenStreetMap](https://www.openstreetmap.org/)** - Map tiles
-
----
-
-## 📁 Project Structure
-
-```
-groupie/
-│
-├── cmd/
-│   └── main.go                 # Entry point - starts server
-│
-├── server/
-│   ├── server.go              # Server setup & routing
-│   └── handlers.go            # Request handlers & logic
-│
-└── web/
-    ├── html/
-    │   ├── index.html         # Home page
-    │   ├── artistes.html      # Artist list page
-    │   ├── details.html       # Artist detail page
-    │   └── 404.html           # Error page
-    │
-    ├── css/
-    │   ├── style.css          # Home page styles
-    │   ├── artistes.css       # Artist list styles
-    │   └── details.css        # Details page styles
-    │
-    ├── js/
-    │   ├── script.js          # Search & autocomplete
-    │   ├── map.js             # Interactive map
-    │   └── transitions.js     # Page animations
-    │
-    └── img/
-        └── miku.jpg           # Background image
-```
-
----
-
-## 🚀 Installation
-
-### Prerequisites
-
-- Go 1.21 or higher
-- Internet connection (for API access)
-
-### Steps
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/yourusername/groupie-tracker.git
+git clone <votre-repository>
 cd groupie-tracker
 ```
 
-2. **Verify Go installation**
-```bash
-go version
+2. **Vérifier la structure du projet**
+```
+groupie-tracker/
+├── cmd/
+│   └── main.go
+├── server/
+│   ├── server.go
+│   └── handlers.go
+├── web/
+│   ├── html/
+│   ├── css/
+│   ├── js/
+│   └── img/
+└── README.md
 ```
 
-3. **Run the application**
+3. **Lancer le serveur**
 ```bash
 go run cmd/main.go
 ```
 
-4. **Open in browser**
+4. **Accéder à l'application**
+Ouvrez votre navigateur et allez sur :
 ```
 http://localhost:8080
 ```
 
-### Building for Production
-
-```bash
-# Build executable
-go build -o groupie-tracker cmd/main.go
-
-# Run executable
-./groupie-tracker
+Le serveur affichera :
+```
+✅ Server running at http://localhost:8080
 ```
 
 ---
 
-## 💻 Usage
+## 🛣️ Routes Principales et Leurs Fonctions
 
-### Browsing Artists
+| Route | Méthode | Fonction |
+|-------|---------|----------|
+| `/` | GET | Page d'accueil avec présentation du projet |
+| `/albums` | GET | Liste complète des artistes avec filtres |
+| `/artists` | GET | Résultats de recherche filtrés (query params) |
+| `/details/{name}` | GET | Page détaillée d'un artiste avec concerts et carte |
+| `/search` | GET | API pour l'autocomplétion de recherche |
+| `/submit` | POST | Traitement des formulaires (redirection) |
+| `/css/*` | GET | Fichiers CSS statiques |
+| `/js/*` | GET | Fichiers JavaScript statiques |
+| `/img/*` | GET | Fichiers images statiques |
 
-1. Click **"Artist"** on the home page
-2. Browse through the list of artists
-3. Click any artist card to see details
+### Paramètres de Requête (Query Parameters)
 
-### Searching
+**Route `/artists`** :
+- `query` : Recherche par nom d'artiste
+- `member` : Recherche par nom de membre
+- `year_min` : Année minimale de création (ex: 1990)
+- `year_max` : Année maximale de création (ex: 2020)
+- `members_count` : Nombre de membres (ex: 1, 2, 3, 4, 5+)
 
-**By Artist Name:**
+**Exemple** :
 ```
-1. Select "Artist" from dropdown
-2. Type artist name (e.g., "Queen")
-3. Click suggestion or press Enter
-```
-
-**By Band Member:**
-```
-1. Select "Member" from dropdown
-2. Type member name (e.g., "Freddie")
-3. Click suggestion to see all their bands
-```
-
-### Filtering
-
-**Year Range:**
-```
-Year min: 1970
-Year max: 1990
-→ Shows artists created between 1970-1990
-```
-
-**Member Count:**
-```
-Number of members: 4
-→ Shows bands with exactly 4 members
-
-Number of members: 5+
-→ Shows bands with 5 or more members
-```
-
-**Combine Filters:**
-```
-Year min: 1990
-Year max: 2000
-Members: 4
-→ Shows 4-member bands created in the 90s
-```
-
-### Viewing Concert Locations
-
-1. Click any artist to view details
-2. Scroll to **"Concert Locations"** section
-3. Interactive map shows all concert venues
-4. Click markers to see venue details
-5. List below shows dates for each location
-
----
-
-## 📡 API Documentation
-
-### Internal Endpoints
-
-#### `GET /`
-**Home page**
-- Returns: HTML home page
-
-#### `GET /artistes`
-**Artist list page**
-- Returns: HTML with all artists
-
-#### `GET /details/{name}`
-**Artist details page**
-- Parameters:
-  - `name` (path) - Artist name (URL encoded)
-- Returns: HTML with artist details and concert map
-
-#### `GET /search`
-**Autocomplete search**
-- Parameters:
-  - `query` (string) - Search term
-  - `type` (string) - "artist" or "member"
-- Returns: JSON array of matching names
-```json
-["Queen", "Queens of the Stone Age"]
-```
-
-#### `GET /artists`
-**Filtered artist search**
-- Parameters:
-  - `query` (string, optional) - Artist name search
-  - `member` (string, optional) - Member name search
-  - `year_min` (int, optional) - Minimum creation year
-  - `year_max` (int, optional) - Maximum creation year
-  - `members_count` (string, optional) - Member count (e.g., "4" or "5+")
-- Returns: HTML with filtered artists
-
-### External APIs Used
-
-#### GroupieTrackers API
-
-**Get all artists:**
-```http
-GET https://groupietrackers.herokuapp.com/api/artists
-```
-
-Response:
-```json
-[
-  {
-    "id": 1,
-    "name": "Queen",
-    "image": "https://...",
-    "members": ["Freddie Mercury", "Brian May", "Roger Taylor", "John Deacon"],
-    "creationDate": 1970,
-    "locations": "https://.../api/locations/1",
-    "concertDates": "https://.../api/dates/1",
-    "relations": "https://.../api/relation/1"
-  }
-]
-```
-
-**Get concert locations:**
-```http
-GET https://groupietrackers.herokuapp.com/api/relation/{id}
-```
-
-Response:
-```json
-{
-  "index": 1,
-  "datesLocations": {
-    "london-uk": ["10-01-2024", "11-01-2024"],
-    "paris-france": ["15-01-2024"]
-  }
-}
-```
-
-#### Nominatim Geocoding API
-
-**Geocode location:**
-```http
-GET https://nominatim.openstreetmap.org/search?format=json&q=Paris,France&limit=1
-```
-
-Response:
-```json
-[
-  {
-    "lat": "48.8566",
-    "lon": "2.3522",
-    "display_name": "Paris, Île-de-France, France"
-  }
-]
-```
-
-⚠️ **Important:** Nominatim requires a User-Agent header and has a 1 request/second rate limit.
-
----
-
-## 🔧 How It Works
-
-### Architecture Overview
-
-```
-┌─────────────┐
-│   Browser   │
-└──────┬──────┘
-       │ HTTP Request
-       ↓
-┌─────────────────────────────────┐
-│      Go Server (Port 8080)      │
-│  ┌──────────────────────────┐  │
-│  │  Router (server.go)      │  │
-│  │  • Routes                │  │
-│  │  • Static files          │  │
-│  └────────┬─────────────────┘  │
-│           ↓                     │
-│  ┌──────────────────────────┐  │
-│  │  Handlers (handlers.go)  │  │
-│  │  • Process requests      │  │
-│  │  • Fetch API data        │  │
-│  │  • Render templates      │  │
-│  └──────────────────────────┘  │
-└─────────────────────────────────┘
-       │ HTTP GET
-       ↓
-┌─────────────────────────────────┐
-│     GroupieTrackers API         │
-│  (External - Heroku)            │
-└─────────────────────────────────┘
-```
-
-### Request Flow Example
-
-**User visits artist details:**
-
-```
-1. User clicks "Queen" card
-   ↓
-2. Browser: GET /details/Queen
-   ↓
-3. Server (DetailsHandler):
-   • Extract "Queen" from URL
-   • Find artist in memory (AllArtists)
-   • Fetch concert data from API
-   • Combine data
-   ↓
-4. Render details.html template
-   • Inject artist info
-   • Embed concert JSON
-   ↓
-5. Browser receives HTML
-   ↓
-6. map.js executes:
-   • Parse embedded JSON
-   • Geocode each location (Nominatim)
-   • Add markers to Leaflet map
-   ↓
-7. User sees interactive page with map
-```
-
-### Data Flow
-
-```
-Startup:
-┌──────────────┐
-│  main.go     │
-│  • Fetch API │ ──GET──> GroupieTrackers API
-│  • Store data│          (All artists)
-│  • Start srv │
-└──────────────┘
-       ↓
-   Server Ready
-   
-Runtime:
-┌──────────────┐
-│  User Request│
-└──────┬───────┘
-       ↓
-┌──────────────┐
-│  Handler     │
-│  • Search    │ ──→ Filter AllArtists in memory
-│  • Filter    │
-│  • Details   │ ──GET──> GroupieTrackers API
-└──────┬───────┘          (Concert data)
-       ↓
-┌──────────────┐
-│  Template    │
-│  • Render    │
-└──────┬───────┘
-       ↓
-┌──────────────┐
-│  Browser     │
-│  • Display   │
-│  • map.js    │ ──GET──> Nominatim API
-└──────────────┘          (Coordinates)
-```
-
-### Key Features Explained
-
-#### 1. Smart Search with Autocomplete
-
-```javascript
-// User types "qu"
-input.addEventListener("input", async () => {
-    // Fetch matching artists
-    const res = await fetch(`/search?query=qu&type=artist`);
-    const results = await res.json();
-    // ["Queen", "Queens of the Stone Age"]
-    
-    // Display dropdown
-    results.forEach(name => {
-        // Click → navigate to artist page
-    });
-});
-```
-
-#### 2. Multi-Filter System
-
-```go
-// Server combines all filters
-for _, artist := range AllArtists {
-    match := true
-    
-    // Name search
-    if query != "" && !strings.Contains(artist.Name, query) {
-        match = false
-    }
-    
-    // Year range
-    if yearMin != 0 && artist.CreationDate < yearMin {
-        match = false
-    }
-    
-    // Member count
-    if memberCount != len(artist.Members) {
-        match = false
-    }
-    
-    if match {
-        results = append(results, artist)
-    }
-}
-```
-
-#### 3. Interactive Map
-
-```javascript
-// Initialize map
-const map = L.map('map').setView([20, 0], 2);
-
-// Add OpenStreetMap tiles
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-// Geocode and add markers
-for (const [location, count] of Object.entries(concerts)) {
-    // "Paris-France" → "Paris, France"
-    const cleanLocation = location.replace(/_/g, ' ').replace(/-/g, ', ');
-    
-    // Get coordinates
-    const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${cleanLocation}`
-    );
-    const {lat, lon} = await response.json()[0];
-    
-    // Add marker
-    L.marker([lat, lon])
-        .addTo(map)
-        .bindPopup(`${location} - ${count} concerts`);
-}
+/artists?query=queen&year_min=1970&year_max=1980&members_count=4
 ```
 
 ---
 
-## 🤝 Contributing
+## ✨ Fonctionnalités Implémentées
 
-Contributions are welcome! Here's how you can help:
+### 🎯 Fonctionnalités Obligatoires
 
-### Reporting Bugs
+1. **Affichage des Artistes**
+   - Liste complète des artistes avec images
+   - Informations de base (nom, image)
+   - Navigation vers pages détaillées
 
-1. Check if the bug has already been reported
-2. Open a new issue with:
-   - Clear description
-   - Steps to reproduce
-   - Expected vs actual behavior
-   - Screenshots if applicable
+2. **Page de Détails**
+   - Informations complètes de l'artiste
+   - Liste des membres
+   - Année de création
+   - Lieux et dates de concerts
+   - Carte interactive avec marqueurs
 
-### Suggesting Features
+3. **Recherche**
+   - Barre de recherche avec autocomplétion
+   - Recherche par nom d'artiste
+   - Recherche par nom de membre
+   - Suggestions en temps réel
 
-Open an issue with:
-- Feature description
-- Use case
-- Proposed implementation (optional)
+4. **Filtres**
+   - Filtre par année de création (min/max)
+   - Filtre par nombre de membres (1, 2, 3, 4, 5+)
+   - Combinaison de plusieurs filtres
+   - Bouton "Clear Filters" pour réinitialiser
 
-### Pull Requests
+5. **Gestion d'Erreurs**
+   - Page 404 personnalisée
+   - Gestion des erreurs API
+   - Validation des routes
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+### 🌟 Fonctionnalités Bonus
 
-### Development Guidelines
+1. **Carte Interactive (Leaflet.js)**
+   - Géolocalisation automatique des lieux de concerts
+   - Marqueurs interactifs avec popups
+   - Zoom et navigation sur la carte
+   - Intégration OpenStreetMap
+   - Liste des concerts sous la carte
 
-- Follow Go best practices
-- Comment complex logic
-- Test your changes
-- Keep commits atomic
-- Update documentation
+2. **Animations et Transitions**
+   - Animation "warp speed" entre les pages
+   - Effet de shimmer sur le titre
+   - Animations de cartes d'artistes échelonnées
+   - Effets de survol fluides
+   - Transitions glassmorphism
 
----
+3. **Interface Moderne**
+   - Design glassmorphism avec backdrop-filter
+   - Dégradés animés
+   - Style épuré et professionnel
+   - Responsive design
+   - Background personnalisé (Hatsune Miku)
 
-## 🐛 Troubleshooting
+4. **Intégrations Musicales**
+   - Liens directs vers Spotify
+   - Liens directs vers Deezer
+   - Ouverture dans de nouveaux onglets
 
-### Map Not Loading
+5. **UX Améliorée**
+   - Autocomplétion intelligente (artistes et membres)
+   - Switch pour changer le type de recherche
+   - Boutons fixes pour navigation rapide
+   - Feedback visuel sur les interactions
+   - Troncature automatique des textes longs
 
-**Symptom:** Gray box instead of map, no markers
+### 🔧 Fonctionnalités Techniques
 
-**Solutions:**
-
-1. **Add User-Agent header to Nominatim requests:**
-```javascript
-const response = await fetch(url, {
-    headers: {
-        'User-Agent': 'GroupieTracker/1.0'
-    }
-});
-```
-
-2. **Check browser console** (F12 → Console) for errors
-
-3. **Verify Leaflet.js loaded:**
-```javascript
-console.log(typeof L); // Should be "object"
-```
-
-4. **Test Nominatim directly:**
-```
-https://nominatim.openstreetmap.org/search?format=json&q=Paris&limit=1
-```
-
-### Artists Not Displaying
-
-**Check:**
-
-1. **API accessibility:**
-```bash
-curl https://groupietrackers.herokuapp.com/api/artists
-```
-
-2. **Server logs:** Look for errors during startup
-
-3. **Browser Network tab:** Check if `/artistes` request succeeds
-
-### Search Not Working
-
-**Check:**
-
-1. **JavaScript console** for errors
-2. **Network tab:** Is `/search` endpoint responding?
-3. **Test endpoint directly:**
-```
-http://localhost:8080/search?query=queen&type=artist
-```
-
-### Port Already in Use
-
-**Error:** `bind: address already in use`
-
-**Solution:**
-```bash
-# Find process using port 8080
-lsof -i :8080
-
-# Kill process
-kill -9 <PID>
-
-# Or change port in server.go:
-http.ListenAndServe(":8081", handler)
-```
-
-### Slow Map Loading
-
-**Cause:** Sequential geocoding (1 request/second)
-
-**Temporary fix:** Reduce number of concert locations in data
-
-**Better fix:** Implement geocoding cache:
-```go
-var geoCache = make(map[string]Coordinates)
-```
+- **Architecture MVC** : Séparation claire entre serveur, handlers et templates
+- **API REST** : Consommation de l'API Groupie Trackers
+- **Templates Go** : Rendu dynamique avec html/template
+- **Geocoding** : Utilisation de l'API Nominatim pour la géolocalisation
+- **Rate Limiting** : Gestion des requêtes API avec délais
+- **Error Handling** : Gestion robuste des erreurs
+- **Static File Serving** : Serveur de fichiers statiques optimisé
 
 ---
 
-## 📝 License
+## 🎨 Technologies Utilisées
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Backend
+- **Go** : Langage principal
+- **net/http** : Serveur HTTP natif
+- **html/template** : Moteur de templates
+- **encoding/json** : Manipulation JSON
 
----
+### Frontend
+- **HTML5** : Structure sémantique
+- **CSS3** : Styles avancés (glassmorphism, animations)
+- **JavaScript (Vanilla)** : Interactions dynamiques
+- **Leaflet.js** : Bibliothèque de cartographie
 
-## 👥 Authors
-
-- **Your Name** - *Initial work* - [YourGitHub](https://github.com/Bibounet31)
-
----
-
-## 🙏 Acknowledgments
-
-- [GroupieTrackers](https://groupietrackers.herokuapp.com) for the API
-- [OpenStreetMap](https://www.openstreetmap.org/) for map tiles
-- [Leaflet.js](https://leafletjs.com/) for the mapping library
-- [Nominatim](https://nominatim.openstreetmap.org/) for geocoding
-
----
-
-## 📞 Support
-
-If you have any questions or need help:
-
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/groupie-tracker/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/groupie-tracker/discussions)
+### APIs Externes
+- **Groupie Trackers API** : Données des artistes
+- **Nominatim (OpenStreetMap)** : Géocodage
+- **Spotify** : Liens vers les artistes
+- **Deezer** : Liens vers les artistes
 
 ---
 
-## 🗺️ Roadmap
+## 📁 Structure du Projet
 
-- [ ] Add user authentication
-- [ ] Implement favorites system
-- [ ] Add concert date filtering
-- [ ] Improve mobile responsiveness
-- [ ] Add dark/light theme toggle
-- [ ] Implement geocoding cache
-- [ ] Add pagination for artist list
-- [ ] Export concert data to calendar
-- [ ] Add artist comparisons
-- [ ] Implement SQL database
+```
+groupie-tracker/
+├── cmd/
+│   └── main.go              # Point d'entrée de l'application
+├── server/
+│   ├── server.go            # Configuration du serveur
+│   └── handlers.go          # Gestionnaires de routes
+├── web/
+│   ├── html/
+│   │   ├── index.html       # Page d'accueil
+│   │   ├── albums.html      # Liste des artistes
+│   │   ├── details.html     # Détails d'un artiste
+│   │   └── 404.html         # Page d'erreur
+│   ├── css/
+│   │   ├── style.css        # Styles page d'accueil
+│   │   ├── albums.css       # Styles liste artistes
+│   │   ├── details.css      # Styles page détails
+│   │   └── 404.css          # Styles page erreur
+│   ├── js/
+│   │   ├── script.js        # Recherche et autocomplétion
+│   │   ├── map.js           # Carte interactive
+│   │   └── transitions.js   # Animations de page
+│   └── img/
+│       ├── logo.jpeg        # Logo du projet
+│       └── miku.jpg         # Background
+└── README.md
+```
 
 ---
 
-## 📊 Statistics
+## 🎯 Exemples d'Utilisation
 
-![Lines of Code](https://img.shields.io/badge/lines%20of%20code-2500+-blue)
-![Files](https://img.shields.io/badge/files-13-green)
-![Languages](https://img.shields.io/badge/languages-3-orange)
+### Rechercher un artiste
+1. Sur la page `/albums`, utilisez la barre de recherche
+2. Tapez les premières lettres (ex: "que" pour Queen)
+3. Sélectionnez dans les suggestions ou appuyez sur Entrée
+
+### Filtrer par critères
+1. Définissez l'année minimale/maximale
+2. Sélectionnez le nombre de membres
+3. Cliquez sur "Apply Filters"
+4. Utilisez "Clear Filters" pour réinitialiser
+
+### Voir les concerts sur carte
+1. Cliquez sur un artiste
+2. Faites défiler jusqu'à la section "Concert Locations"
+3. Explorez la carte interactive
+4. Cliquez sur les marqueurs pour voir les détails
 
 ---
 
-**Made with ❤️ and Go**
+## 🐛 Gestion des Erreurs
+
+L'application gère plusieurs types d'erreurs :
+
+- **404 Not Found** : Page personnalisée avec animation
+- **Erreurs API** : Logging côté serveur
+- **Erreurs de parsing JSON** : Gestion silencieuse
+- **Erreurs de géocodage** : Fallback gracieux
+
+---
+
+## 📝 Notes Importantes
+
+- Le serveur doit avoir accès à Internet pour :
+  - Récupérer les données de l'API Groupie Trackers
+  - Géocoder les lieux de concerts
+  - Charger les tuiles de carte OpenStreetMap
+  
+- Les requêtes de géocodage sont limitées à 1 par seconde pour respecter les limites de l'API Nominatim
+
+- Les animations CSS utilisent des propriétés modernes (backdrop-filter) qui peuvent ne pas être supportées sur tous les navigateurs
+
+---
+
+## 👥 Auteurs
+
+© 2025 Groupie Tracker
+
+---
+
+## 📄 Licence
+
+Ce projet est réalisé dans un cadre éducatif.
+
+---
+
+## 🔗 Liens Utiles
+
+- [API Groupie Trackers](https://groupietrackers.herokuapp.com/api)
+- [Documentation Leaflet.js](https://leafletjs.com/)
+- [Documentation Go net/http](https://pkg.go.dev/net/http)
+- [Nominatim API](https://nominatim.org/)

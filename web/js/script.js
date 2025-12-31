@@ -58,6 +58,20 @@ if (input && suggestions && searchType) {
             e.preventDefault();
         }
     });
+
+    // Hide suggestions when clicking outside - use mousedown instead of click
+    document.addEventListener("mousedown", (e) => {
+        // Check if click is outside the input, suggestions, and select
+        const clickedElement = e.target;
+        const isInsideAutocomplete = input.contains(clickedElement) ||
+            suggestions.contains(clickedElement) ||
+            searchType.contains(clickedElement);
+
+        if (!isInsideAutocomplete) {
+            suggestions.innerHTML = "";
+            suggestions.style.display = "none";
+        }
+    });
 }
 
 // Clear filters function - made global so HTML onclick can access it

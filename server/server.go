@@ -31,7 +31,7 @@ func Start() {
 	})
 
 	http.HandleFunc("/submit", SubmitHandler)
-	http.HandleFunc("/artistes", ArtistesHandler)
+	http.HandleFunc("/album", AlbumHandler)
 	http.HandleFunc("/details/", DetailsHandler)
 	http.HandleFunc("/search", SearchHandler)
 	http.HandleFunc("/artists", SearchResultsHandler)

@@ -54,9 +54,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // load artist page
-func ArtistesHandler(w http.ResponseWriter, r *http.Request) {
+func AlbumHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(AllArtists)
-	render(w, "artistes.html", AllArtists)
+	render(w, "albums.html", AllArtists)
 }
 
 func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
@@ -154,7 +154,7 @@ func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("  Total results: %d\n\n", len(results))
 
-	render(w, "artistes.html", results)
+	render(w, "albums.html", results)
 }
 
 func SearchHandler(w http.ResponseWriter, r *http.Request) {

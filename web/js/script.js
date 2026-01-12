@@ -76,7 +76,7 @@ if (input && suggestions && searchType) {
 
 // Clear filters function - made global so HTML onclick can access it
 function clearFilters() {
-    window.location.href = '/artistes';
+    window.location.href = '/album';
 }
 
 // Make it available globally

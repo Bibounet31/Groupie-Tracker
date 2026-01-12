@@ -2,10 +2,9 @@ package main
 
 import (
 	"encoding/json"
+	"groupie/server"
 	"log"
 	"net/http"
-
-	"groupie/server"
 )
 
 func main() {

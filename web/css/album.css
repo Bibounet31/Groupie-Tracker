@@ -66,7 +66,7 @@ a {
     background-color: rgba(56, 37, 37, 0.19);
     position: fixed;
     bottom: 20px;
-    right: 10px;
+    right: 20px;
     z-index: 1000;
 }
 
@@ -128,7 +128,7 @@ ul li {
 
 ul li a {
     display: block;
-    max-width: 150px;
+    max-width: 90px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

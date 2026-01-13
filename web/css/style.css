@@ -1,4 +1,10 @@
-/* General page styling */
+/* GLOBAL STYLE */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: "Segoe UI", Arial, sans-serif;
     background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
@@ -10,19 +16,26 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
+    overflow-x: hidden;
 }
 
+/* BIG TITLES */
 h1 {
-    font-family: "Century Gothic";
-    font-size: 60px;
+    font-family: "Century Gothic", sans-serif;
+    font-size: clamp(36px, 8vw, 60px); /* Responsive font size */
     font-weight: bold;
     background: linear-gradient(90deg, #ffffff, #68c8d5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
 }
 
+/*  ARTIST BUTTON */
 a {
-    font-family: "Century Gothic";
+    font-family: "Century Gothic", sans-serif;
     display: inline-block;
     padding: 12px 28px;
     border-radius: 30px;
@@ -32,51 +45,182 @@ a {
     backdrop-filter: blur(10px);
     text-decoration: none;
     transition: 0.3s ease;
-    font-size: 30px;
-    box-shadow: 0 6px 12px;
+    font-size: clamp(20px, 4vw, 30px); /* Responsive font size */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Effet au survol */
 a:hover {
-    transform: scale(1.1); /* grossit légèrement */
-    background-color: rgba(119, 201, 236, 0.53); /* fond un peu plus visible au survol */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* accentue l'ombre pour effet “bouton réel” */
+    transform: scale(1.1);
+    background-color: rgba(119, 201, 236, 0.53);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+/* DESCRIPTION PARAGRAPH */
 p {
-    box-shadow: 0 6px 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 60vw;            /* large mais pas trop */
+    width: 90vw;
     max-width: 700px;
     height: auto;
-    padding: 4vh 5vh;
-    border-radius: 5vh;
-    margin: auto;           /* centre horizontalement */
+    padding: 30px;
+    border-radius: 20px;
+    margin: auto;
     background: rgba(0, 0, 0, 0.32);
     border: 1px solid rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(10px);
-    font-family: "Century Gothic";
+    font-family: "Century Gothic", sans-serif;
     color: white;
-    font-size: 2.5vh;
+    font-size: clamp(14px, 2.5vw, 18px); /* Responsive font size */
     line-height: 1.6;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* centre vertical + horizontal */
+    transform: translate(-50%, -50%);
 }
 
+/* FOOTER FOR COPYRIGHT */
 .petit {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 15px;
+    right: 15px;
     display: flex;
     flex-direction: column;
     gap: 5px;
     text-align: right;
     color: white;
-    font-size: 20px;
+    font-size: clamp(14px, 2.5vw, 20px); /* Responsive font size */
+}
+
+/* RESPONSIVE BREAKPOINTS  */
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+
+    h1 {
+        font-size: 42px;
+        margin-bottom: 15px;
+    }
+
+    a {
+        font-size: 24px;
+        padding: 10px 24px;
+    }
+
+    p {
+        width: 85vw;
+        padding: 25px;
+        font-size: 16px;
+        border-radius: 15px;
+    }
+
+    .petit {
+        font-size: 16px;
+        bottom: 12px;
+        right: 12px;
+    }
+}
+
+/* Mobile phones (480px and below) */
+@media (max-width: 480px) {
+    body {
+        padding: 15px 10px;
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 12px;
+        word-break: break-word;
+    }
+
+    a {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin-bottom: 15px;
+    }
+
+    a:hover {
+        transform: scale(1.05);
+    }
+
+    p {
+        width: 90vw;
+        padding: 20px;
+        font-size: 14px;
+        border-radius: 12px;
+        /* Adjust position for smaller screens */
+        top: 48%;
+        line-height: 1.5;
+    }
+
+    .petit {
+        font-size: 12px;
+        bottom: 8px;
+        right: 8px;
+    }
+}
+
+
+/* Landscape mobile devices */
+@media (max-height: 600px) and (orientation: landscape) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    a {
+        font-size: 16px;
+        padding: 8px 16px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        width: 80vw;
+        padding: 15px;
+        font-size: 13px;
+        top: 52%;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    .petit {
+        font-size: 11px;
+        bottom: 5px;
+        right: 5px;
+    }
+}
+
+/* Large desktop screens (1920px and above) */
+@media (min-width: 1920px) {
+    h1 {
+        font-size: 72px;
+    }
+
+    a {
+        font-size: 36px;
+        padding: 16px 36px;
+    }
+
+    p {
+        max-width: 900px;
+        padding: 50px;
+        font-size: 22px;
+    }
+
+    .petit {
+        font-size: 24px;
+    }
 }

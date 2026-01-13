@@ -161,7 +161,9 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	query := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("query")))
 	searchType := r.URL.Query().Get("type")
 
-	var results []string
+	// Initialize as empty array instead of nil
+	results := []string{} // Changed from: var results []string
+
 	if query != "" {
 		for _, artist := range AllArtists {
 			if searchType == "member" {

@@ -99,6 +99,26 @@ ul li {
     backdrop-filter: blur(10px);
 }
 
+/* No results message on page */
+#no-results-message {
+    text-align: center;
+    margin: 40px auto;
+    padding: 30px;
+    max-width: 600px;
+    background: rgba(255, 107, 107, 0.15);
+    border: 2px solid #ff6b6b;
+    border-radius: 15px;
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+#no-results-message p {
+    color: #ff6b6b;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+
 .artist-img {
     width: 60px;
     height: 60px;
@@ -198,6 +218,21 @@ ul li a {
 
 #suggestions li:hover {
     background: rgba(104, 200, 213, 0.3);
+}
+
+/* No results message styling */
+#suggestions li.no-results {
+    color: #ff6b6b;
+    font-style: italic;
+    text-align: center;
+    cursor: default;
+    background: rgba(255, 107, 107, 0.1);
+    pointer-events: none;
+}
+
+#suggestions li.no-results:hover {
+    background: rgba(255, 107, 107, 0.1);
+    transform: none;
 }
 
 /* Filters */

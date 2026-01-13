@@ -12,6 +12,16 @@
 <a href="/">Back to menu</a>
 <h1>Artists</h1>
 
+<!-- fav -->
+<div class="favorites-controls">
+    <button onclick="showOnlyFavorites()" class="fav-btn">
+        ⭐ Show Favorites Only
+    </button>
+    <button onclick="showAllArtists()" class="fav-btn show-all-btn">
+        📋 Show All Artists
+    </button>
+</div>
+
 <!-- SEARCH BAR -->
 <div class="input-container">
     <div class="autocomplete">
@@ -60,6 +70,7 @@
 </ul>
 
 <!-- SCRIPTS -->
+<script src="../js/favorites.js"></script>
 <script src="../js/script.js"></script>
 <script src="../js/transitions.js"></script>
 </body>

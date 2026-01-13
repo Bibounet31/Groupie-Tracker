@@ -388,6 +388,63 @@ ul li a {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
+/* Favorites controls */
+.favorites-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px auto;
+    opacity: 0;
+    animation: fadeInUp 0.4s ease-out 0.25s forwards;
+}
+
+.fav-btn {
+    padding: 12px 24px;
+    border-radius: 15px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 215, 0, 0.2);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.fav-btn:hover {
+    transform: scale(1.05);
+    background: rgba(255, 215, 0, 0.4);
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.3);
+}
+
+.show-all-btn {
+    background: rgba(56, 37, 37, 0.19);
+}
+
+.show-all-btn:hover {
+    background: rgba(2, 183, 191, 0.4);
+}
+
+/* Favorite star styling */
+.favorite-star {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.favorite-star:hover {
+    transform: scale(1.3);
+}
+
+.favorite-star.favorited {
+    animation: starPulse 0.3s ease;
+}
+
+@keyframes starPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+    100% { transform: scale(1); }
+}
+
 #myUL li:nth-child(1) { animation-delay: 0.02s; }
 #myUL li:nth-child(2) { animation-delay: 0.04s; }
 #myUL li:nth-child(3) { animation-delay: 0.06s; }

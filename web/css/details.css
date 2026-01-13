@@ -317,3 +317,16 @@ body::after {
     transform: scale(1.08);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
+/* Details page favorite star */
+.detail-star {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.detail-star:hover {
+    transform: scale(1.2) rotate(15deg);
+}
+
+.detail-star.favorited {
+    animation: starPulse 0.4s ease;
+}

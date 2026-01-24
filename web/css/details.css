@@ -127,6 +127,7 @@ ul li {
 .carte {
     margin-top: 30px;
     padding: 16px;
+    padding-left: 30px;
     border-radius: 10px;
     background: linear-gradient(135deg, #1db954, #1ed760);
     color: #0f2027;
@@ -146,6 +147,16 @@ ul li {
     margin: 20px 0;
     border: 2px solid #0f2027;
     z-index: 1;
+}
+
+/* Hide Leaflet zoom controls */
+.leaflet-control-zoom {
+    display: none !important;
+}
+
+/* Hide Leaflet attribution */
+.leaflet-control-attribution {
+    display: none !important;
 }
 
 /* Fix for Leaflet tile loading and black lines */

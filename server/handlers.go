@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"net/http"
 	"net/url"
@@ -15,14 +14,9 @@ type Artist struct {
 	Image        string
 	Members      []string
 	CreationDate int
-	Locations    string // URL to locations
-	ConcertDates string // URL to dates
-	Relations    string // URL to relations
-}
-
-type Location struct {
-	Index     int      `json:"index"`
-	Locations []string `json:"locations"`
+	Locations    string
+	ConcertDates string
+	Relations    string
 }
 
 type Relation struct {
@@ -31,151 +25,93 @@ type Relation struct {
 }
 
 var AllArtists []Artist
-var counter int
 
-// send data to page
+// ---------------- TEMPLATE LOADER----------------
+
 func render(w http.ResponseWriter, file string, data any) {
-	funcMap := template.FuncMap{
-		"add":        func(a, b int) int { return a + b },
-		"pathEscape": url.PathEscape,
-	}
-
-	t, err := template.New(file).Funcs(funcMap).ParseFiles("web/html/" + file)
+	t, err := template.ParseFiles("web/html/" + file)
 	if err != nil {
-		http.Error(w, "Template not found", 500)
+		http.Error(w, "Template not found", http.StatusInternalServerError)
 		return
 	}
 	t.Execute(w, data)
 }
 
-// load index page
+// ---------------- RENDER PAGES ----------------
+
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	render(w, "index.html", nil)
 }
 
-// load artist page
 func AlbumHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(AllArtists)
 	render(w, "albums.html", AllArtists)
 }
 
+// ---------------- SEARCH RESULTS ----------------
+
 func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
-	query := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("query")))
-	member := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("member")))
+	query := strings.ToLower(strings.TrimSpace(r.URL.Query().Get("query")))
+	member := strings.ToLower(strings.TrimSpace(r.URL.Query().Get("member")))
 
-	yearMinStr := r.URL.Query().Get("year_min")
-	yearMaxStr := r.URL.Query().Get("year_max")
-	membersCounts := r.URL.Query()["members_count"]
-
-	fmt.Printf("DEBUG - Received params:\n")
-	fmt.Printf("  query: '%s'\n", query)
-	fmt.Printf("  member: '%s'\n", member)
-	fmt.Printf("  year_min: '%s'\n", yearMinStr)
-	fmt.Printf("  year_max: '%s'\n", yearMaxStr)
-	fmt.Printf("  members_count: %v\n", membersCounts)
-
-	var yearMin, yearMax int
-	if yearMinStr != "" {
-		fmt.Sscanf(yearMinStr, "%d", &yearMin)
-	}
-	if yearMaxStr != "" {
-		fmt.Sscanf(yearMaxStr, "%d", &yearMax)
-	}
-
-	fmt.Printf("  Parsed yearMin: %d, yearMax: %d\n", yearMin, yearMax)
-
-	var membersFilter []int
-	for _, s := range membersCounts {
-		if s == "5+" {
-			membersFilter = append(membersFilter, 5)
-		} else {
-			var n int
-			fmt.Sscanf(s, "%d", &n)
-			if n > 0 {
-				membersFilter = append(membersFilter, n)
-			}
-		}
-	}
+	yearMin := r.URL.Query().Get("year_min")
+	yearMax := r.URL.Query().Get("year_max")
 
 	var results []Artist
+
 	for _, artist := range AllArtists {
-		match := true
 
-		if query != "" || member != "" {
-			searchMatch := false
+		// search by name
+		if query != "" && !strings.Contains(strings.ToLower(artist.Name), query) {
+			continue
+		}
 
-			if query != "" && strings.Contains(strings.ToLower(artist.Name), query) {
-				searchMatch = true
-			}
-
-			if member != "" {
-				for _, m := range artist.Members {
-					if strings.Contains(strings.ToLower(m), member) {
-						searchMatch = true
-						break
-					}
+		// search by member
+		if member != "" {
+			found := false
+			for _, m := range artist.Members {
+				if strings.Contains(strings.ToLower(m), member) {
+					found = true
 				}
 			}
-
-			if !searchMatch {
-				match = false
+			if !found {
+				continue
 			}
 		}
 
-		if match && yearMin != 0 && artist.CreationDate < yearMin {
-			match = false
+		// filter by min year
+		if yearMin != "" && artist.CreationDate < toInt(yearMin) {
+			continue
 		}
 
-		if match && yearMax != 0 && artist.CreationDate > yearMax {
-			match = false
+		// filter by max year
+		if yearMax != "" && artist.CreationDate > toInt(yearMax) {
+			continue
 		}
 
-		if match && len(membersFilter) > 0 {
-			memberCount := len(artist.Members)
-			matchedCount := false
-			for _, mc := range membersFilter {
-				if mc == 5 && memberCount >= 5 {
-					matchedCount = true
-					break
-				} else if mc == memberCount {
-					matchedCount = true
-					break
-				}
-			}
-			if !matchedCount {
-				match = false
-			}
-		}
-
-		if match {
-			results = append(results, artist)
-		}
+		results = append(results, artist)
 	}
-
-	fmt.Printf("  Total results: %d\n\n", len(results))
 
 	render(w, "albums.html", results)
 }
 
+// ---------------- AUTOCOMPLETE SEARCH ----------------
+
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
-	query := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("query")))
+	query := strings.ToLower(strings.TrimSpace(r.URL.Query().Get("query")))
 	searchType := r.URL.Query().Get("type")
 
-	// Initialize as empty array instead of nil
-	results := []string{} // Changed from: var results []string
+	results := []string{}
 
-	if query != "" {
-		for _, artist := range AllArtists {
-			if searchType == "member" {
-				for _, m := range artist.Members {
-					if strings.Contains(strings.ToLower(m), query) {
-						results = append(results, m)
-					}
+	for _, artist := range AllArtists {
+		if searchType == "member" {
+			for _, m := range artist.Members {
+				if strings.Contains(strings.ToLower(m), query) {
+					results = append(results, m)
 				}
-			} else {
-				if strings.Contains(strings.ToLower(artist.Name), query) {
-					results = append(results, artist.Name)
-				}
+			}
+		} else {
+			if strings.Contains(strings.ToLower(artist.Name), query) {
+				results = append(results, artist.Name)
 			}
 		}
 	}
@@ -183,6 +119,8 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(results)
 }
+
+// ---------------- DETAILS ----------------
 
 func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 	path := strings.TrimPrefix(r.URL.Path, "/details/")
@@ -192,11 +130,9 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	name = strings.TrimSpace(name)
-
 	for _, artist := range AllArtists {
 		if strings.EqualFold(artist.Name, name) {
-			// Fetch relations (locations + dates)
+
 			var relation Relation
 			if artist.Relations != "" {
 				resp, err := http.Get(artist.Relations)
@@ -206,7 +142,6 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			// Create data structure for template
 			data := struct {
 				Artist
 				DatesLocations map[string][]string
@@ -223,16 +158,25 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
-func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Redirect(w, r, "/", 303)
-		return
-	}
+// ---------------- FORM ----------------
 
-	http.Redirect(w, r, "/", 303)
+func SubmitHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
+
+// ---------------- 404 ----------------
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	render(w, "404.html", nil)
+}
+
+// ---------------- UTILS ----------------
+// convert year str to an int
+func toInt(s string) int {
+	n := 0
+	for _, c := range s {
+		n = n*10 + int(c-'0')
+	}
+	return n
 }

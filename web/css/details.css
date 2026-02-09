@@ -280,7 +280,7 @@ body::after {
 
 .music-link {
     position: absolute;
-    top: 15px;              /* même hauteur pour les deux */
+    top: 15px;
     right: 20px;
     display: inline-block;
     width: 160px;
@@ -305,7 +305,7 @@ body::after {
     transform: scale(1.08);
 }
 
-/* Bouton Wikipédia (encore plus à gauche) */
+/* Bouton Wikipédia  */
 .wikipedia-link {
     position: absolute;
     top: 15px;

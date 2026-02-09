@@ -1,0 +1,80 @@
+/* Reset basique */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+/* Background */
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+}
+
+/* 404 title */
+h1 {
+    font-size: 8rem;
+    font-weight: 800;
+    letter-spacing: 6px;
+    margin-bottom: 15px;
+    animation: float 2.5s ease-in-out infinite;
+}
+
+/* Text */
+p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+}
+
+/* Button */
+a {
+    text-decoration: none;
+    padding: 14px 32px;
+    border-radius: 30px;
+    background: #ffffff;
+    color: #2c5364;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover effect */
+a:hover {
+    background: #2c5364;
+    color: #ffffff;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+}
+
+/* Animation */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-12px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 5rem;
+    }
+
+    p {
+        font-size: 0.95rem;
+    }
+}

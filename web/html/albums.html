@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Artists</title>
+    <link rel="stylesheet" href="../css/album.css">
+</head>
+
+<body>
+
+<a href="/">Back to menu</a>
+<h1>Artists</h1>
+
+<!-- fav -->
+<div class="favorites-controls">
+    <button onclick="showOnlyFavorites()" class="fav-btn">
+        ⭐ Show Favorites Only
+    </button>
+    <button onclick="showAllArtists()" class="fav-btn show-all-btn">
+        📋 Show All Artists
+    </button>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="input-container">
+    <div class="autocomplete">
+        <select id="searchType">
+            <option value="artist">Artist</option>
+            <option value="member">Member</option>
+        </select>
+        <input type="text" id="myInput" placeholder="Search..." />
+        <ul id="suggestions"></ul>
+    </div>
+</div>
+
+<div class="filters-container">
+    <form id="filtersForm" method="get" action="/artists">
+        <div class="filters-top">
+            <label>
+                Year min:
+                <input type="number" name="year_min" placeholder="e.g., 1990">
+            </label>
+            <label>
+                Year max:
+                <input type="number" name="year_max" placeholder="e.g., 2020">
+            </label>
+            <label>
+                Number of members:
+                <input type="text" name="members_count" placeholder="e.g., 3 or 5+">
+            </label>
+            <button type="submit">Apply Filters</button>
+            <button type="button" class="clear-btn" onclick="clearFilters()">Clear Filters</button>
+        </div>
+    </form>
+</div>
+
+<div id="no-results-message" style="display: none;">
+    <p>No artists found matching your search. Try different keywords or clear your filters.</p>
+</div>
+
+<!-- ARTISTS LIST -->
+<ul id="myUL">
+    {{ range . }}
+    <li>
+        <img src="{{ .Image }}" alt="" class="artist-img">
+        <a href="/details/{{ .Name | pathEscape }}">{{ .Name }}</a>
+    </li>
+    {{ end }}
+</ul>
+
+<!-- SCRIPTS -->
+<script src="../js/favorites.js"></script>
+<script src="../js/script.js"></script>
+<script src="../js/transitions.js"></script>
+</body>
+</html>

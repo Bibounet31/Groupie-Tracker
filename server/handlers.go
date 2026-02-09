@@ -9,35 +9,28 @@ import (
 	"strings"
 )
 
-// ---STRUCTS---
+// Artist represents an artist with their information
 type Artist struct {
 	Id           int
 	Name         string
 	Image        string
 	Members      []string
 	CreationDate int
-	Locations    string // URL to locations
-	ConcertDates string // URL to dates
-	Relations    string // URL to relations
+	Relations    string
 }
 
-type Location struct {
-	Index     int      `json:"index"`
-	Locations []string `json:"locations"`
-}
-
+// Relation link dates and locations
 type Relation struct {
 	Index          int                 `json:"index"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
 
+// AllArtists keep all the artists loaded from the API
 var AllArtists []Artist
-var counter int
 
-// send data to page
+// render sends data to the specified HTML template
 func render(w http.ResponseWriter, file string, data any) {
 	funcMap := template.FuncMap{
-		"add":        func(a, b int) int { return a + b },
 		"pathEscape": url.PathEscape,
 	}
 
@@ -46,20 +39,20 @@ func render(w http.ResponseWriter, file string, data any) {
 		http.Error(w, "Template not found", 500)
 		return
 	}
-	t.Execute(w, data)
+	_ = t.Execute(w, data)
 }
 
-// load index page
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
+// IndexHandler loads the index page
+func IndexHandler(w http.ResponseWriter, _ *http.Request) {
 	render(w, "index.html", nil)
 }
 
-// load artist page
-func AlbumHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(AllArtists)
+// AlbumHandler loads the artist page
+func AlbumHandler(w http.ResponseWriter, _ *http.Request) {
 	render(w, "albums.html", AllArtists)
 }
 
+// SearchResultsHandler handles filtered search results
 func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 	query := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("query")))
 	member := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("member")))
@@ -68,22 +61,13 @@ func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 	yearMaxStr := r.URL.Query().Get("year_max")
 	membersCounts := r.URL.Query()["members_count"]
 
-	fmt.Printf("DEBUG - Received params:\n")
-	fmt.Printf("  query: '%s'\n", query)
-	fmt.Printf("  member: '%s'\n", member)
-	fmt.Printf("  year_min: '%s'\n", yearMinStr)
-	fmt.Printf("  year_max: '%s'\n", yearMaxStr)
-	fmt.Printf("  members_count: %v\n", membersCounts)
-
 	var yearMin, yearMax int
 	if yearMinStr != "" {
-		fmt.Sscanf(yearMinStr, "%d", &yearMin)
+		_, _ = fmt.Sscanf(yearMinStr, "%d", &yearMin)
 	}
 	if yearMaxStr != "" {
-		fmt.Sscanf(yearMaxStr, "%d", &yearMax)
+		_, _ = fmt.Sscanf(yearMaxStr, "%d", &yearMax)
 	}
-
-	fmt.Printf("  Parsed yearMin: %d, yearMax: %d\n", yearMin, yearMax)
 
 	var membersFilter []int
 	for _, s := range membersCounts {
@@ -91,7 +75,7 @@ func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 			membersFilter = append(membersFilter, 5)
 		} else {
 			var n int
-			fmt.Sscanf(s, "%d", &n)
+			_, _ = fmt.Sscanf(s, "%d", &n)
 			if n > 0 {
 				membersFilter = append(membersFilter, n)
 			}
@@ -153,17 +137,15 @@ func SearchResultsHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Printf("  Total results: %d\n\n", len(results))
-
 	render(w, "albums.html", results)
 }
 
+// SearchHandler handles search autocomplete
 func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	query := strings.TrimSpace(strings.ToLower(r.URL.Query().Get("query")))
 	searchType := r.URL.Query().Get("type")
 
-	// Initialize as empty array instead of nil
-	results := []string{} // Changed from: var results []string
+	var results []string
 
 	if query != "" {
 		for _, artist := range AllArtists {
@@ -182,9 +164,10 @@ func SearchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(results)
+	_ = json.NewEncoder(w).Encode(results)
 }
 
+// DetailsHandler send to details page for the specific album
 func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 	path := strings.TrimPrefix(r.URL.Path, "/details/")
 	name, err := url.PathUnescape(path)
@@ -197,17 +180,15 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, artist := range AllArtists {
 		if strings.EqualFold(artist.Name, name) {
-			// Fetch relations (locations + dates)
 			var relation Relation
 			if artist.Relations != "" {
 				resp, err := http.Get(artist.Relations)
 				if err == nil {
-					defer resp.Body.Close()
-					json.NewDecoder(resp.Body).Decode(&relation)
+					_ = json.NewDecoder(resp.Body).Decode(&relation)
+					_ = resp.Body.Close()
 				}
 			}
 
-			// Create data structure for template
 			data := struct {
 				Artist
 				DatesLocations map[string][]string
@@ -224,16 +205,8 @@ func DetailsHandler(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
-func SubmitHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
-		http.Redirect(w, r, "/", 303)
-		return
-	}
-
-	http.Redirect(w, r, "/", 303)
-}
-
-func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+// NotFoundHandler displays error 404 page
+func NotFoundHandler(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusNotFound)
 	render(w, "404.html", nil)
 }

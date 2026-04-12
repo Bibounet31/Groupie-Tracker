@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 type responseWriterWrapper struct {
@@ -22,6 +23,12 @@ func (rw *responseWriterWrapper) Write(b []byte) (int, error) {
 
 // Start initializes and starts the HTTP server
 func Start() {
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // fallback en local
+	}
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {
 			NotFoundHandler(w, r)
